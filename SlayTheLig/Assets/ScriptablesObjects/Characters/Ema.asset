@@ -17,3 +17,4 @@ MonoBehaviour:
   characterSprite: {fileID: 0}
   attackList:
   - {fileID: 11400000, guid: 2fbeb1438c07c9c4a9461cdeec3cd4f7, type: 2}
+  - {fileID: 11400000, guid: 468d2de76589be242b85a324a3729c3d, type: 2}

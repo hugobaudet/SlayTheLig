@@ -11,5 +11,7 @@ public class Attack : ScriptableObject
     [Range(0, 3)]
     public int actionCost;
 
+    public int basicDamage;
+
     public Sprite cardSprite;
 }

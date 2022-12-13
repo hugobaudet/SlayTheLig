@@ -5,26 +5,20 @@ using UnityEngine.EventSystems;
 
 public class PlayerBehaviour : CharacterBehaviour
 {
-    public static PlayerBehaviour instance;
-    public int currentActionCost;
+    public int maxActionCost;
 
-    private void Awake()
+    private int currentActionCost;
+
+    public bool isTurnBuffed;
+
+    void StartMatch()
     {
-        if (instance != null)
-        {
-            Debug.LogError("There is more than one PlayerBehaviour in the scene !");
-            Destroy(gameObject);
-            return;
-        }
-        instance = this;
+        currentHP = maxHP;
+        currentActionCost = maxActionCost;
     }
 
-    public bool CheckPossibilityAttack(CharacterBehaviour enemy, Attack attack)
+    public bool CanPlayACard(Attack attack)
     {
-        if (!isAlive) return false;
-        //if (currentActionCost <= attack.actionCost) return false;
-
-        DamageEnemy(enemy, attack);
-        return true;
+        return currentActionCost >= attack.actionCost;
     }
 }

@@ -5,17 +5,35 @@ using UnityEngine.EventSystems;
 
 public class CardBehaviour : MonoBehaviour, IDragHandler, IPointerEnterHandler, IPointerExitHandler , IBeginDragHandler, IEndDragHandler
 {
+    private const float HEIGHT_CARD_PLAYED = 100f;
+
     private RectTransform draggingObject;
     private Vector3 globalMousePosition;
     private Vector3 initialPosition;
-    [SerializeField]
-    private Attack cardAttack;
-    [SerializeField]
-    private LayerMask enemyLayer;
+    bool isHidden;
+
+    private Attack attack;
+
 
     private void Awake()
     {
         draggingObject = transform as RectTransform;
+        initialPosition = transform.position;
+        isHidden = false;
+        ChangeAppearance(true);
+    }
+
+    public void ChangeAppearance(bool isHidden = true)
+    {
+        if (isHidden == this.isHidden) return;
+        this.isHidden = isHidden;
+        transform.position = initialPosition + (Vector3.down * 200 * (isHidden ? 1 : 0));
+    }
+
+    public void SetNewAttack(Attack attack)
+    {
+        this.attack = attack;
+        ChangeAppearance(false);
     }
 
     public void OnDrag(PointerEventData eventData)
@@ -38,19 +56,19 @@ public class CardBehaviour : MonoBehaviour, IDragHandler, IPointerEnterHandler, 
 
     public void OnBeginDrag(PointerEventData eventData)
     {
-        initialPosition = transform.position;
+
     }
 
     public void OnEndDrag(PointerEventData eventData)
     {
-        Collider2D target = Physics2D.OverlapCircle(globalMousePosition, .01f, enemyLayer);
-        if (target != null ? PlayerBehaviour.instance.CheckPossibilityAttack(target.GetComponent<CharacterBehaviour>(), cardAttack) : false)
+        if (globalMousePosition.y >= HEIGHT_CARD_PLAYED)
         {
-            Destroy(gameObject);
+            if (FightSystem.instance.PlayACard(attack))
+            {
+                ChangeAppearance(true);
+                return;
+            }
         }
-        else
-        {
-            transform.position = initialPosition;
-        }
+        transform.position = initialPosition;
     }
 }

@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using UnityEngine;
 
 [CreateAssetMenu(fileName = "Attack", menuName = "ScriptableObjects/Attack", order = 1)]
@@ -8,10 +9,26 @@ public class Attack : ScriptableObject
     [TextArea]
     public string attackDescription;
     
+    public Sprite cardSprite;
+
     [Range(0, 3)]
     public int actionCost;
 
-    public int basicDamage;
+    public AttackType attackType;
 
-    public Sprite cardSprite;
+    public int basicDamage;
+    public int comboDamage;
+    public int basicHeal;
+    public int basicDefense;
+
+    public List<Card> comboPieces;
+}
+
+public enum AttackType
+{
+    SimpleAttack,
+    ComboAttack,
+    Heal,
+    Buff,
+    Defense,
 }

@@ -5,13 +5,15 @@ using UnityEngine;
 public class CharacterBehaviour : MonoBehaviour
 {
     [SerializeField]
-    protected int maxHP;
+    public int maxHP;
 
-    protected int currentHP;
+    public int currentHP;
     protected int armourAmount;
     protected bool isAlive;
 
-    protected virtual void Start()
+    public Gradient phaseColors;
+
+    protected virtual void Awake()
     {
         isAlive = true;
         currentHP = maxHP;
@@ -29,6 +31,7 @@ public class CharacterBehaviour : MonoBehaviour
         currentHP -= Mathf.Clamp(damage, 0, currentHP);
         Debug.Log(name + " a pris " + Mathf.Clamp(damage, 0, currentHP) + " damages, il lui reste " + currentHP + "HPs.");
         CheckDeath();
+        FightSystem.instance.uiManager.UpdateUIHealthBar();
     }
 
     protected virtual void CheckDeath()
@@ -38,6 +41,7 @@ public class CharacterBehaviour : MonoBehaviour
             Debug.Log(name + " est mort!");
             isAlive = false;
             currentHP = 0;
+            FightSystem.instance.WinLose(false);
         }
     }
 
@@ -45,12 +49,13 @@ public class CharacterBehaviour : MonoBehaviour
     {
         this.armourAmount += armourAmount;
         Debug.Log(name + " a gagné " + armourAmount + " d'armures, il possède " + this.armourAmount + " armures.");
+        FightSystem.instance.uiManager.UpdateUIHealthBar();
     }
 
     public virtual void HealCharacter(int healAmount)
     {
         currentHP += Mathf.Clamp(healAmount, 0, maxHP - currentHP);
         Debug.Log(name + " a récupéré " + healAmount + " HPs, il possède désormais " + currentHP + "HPs.");
-
+        FightSystem.instance.uiManager.UpdateUIHealthBar();
     }
 }

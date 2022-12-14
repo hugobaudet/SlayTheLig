@@ -53,6 +53,7 @@ public class CardManager : MonoBehaviour
     {
         currentDiscardPile.Add(currentHand[index]);
         currentHand[index] = null;
+        FightSystem.instance.uiManager.UpdateUIPiles(currentDeck.Count, currentDiscardPile.Count);
     }
 
     public void RemoveComboPieces(Attack attack)
@@ -109,5 +110,6 @@ public class CardManager : MonoBehaviour
         {
             cardBehaviours[i].SetNewAttack(currentHand[i]);
         }
+        FightSystem.instance.uiManager.UpdateUIPiles(currentDeck.Count, currentDiscardPile.Count);
     }
 }

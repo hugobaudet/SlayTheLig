@@ -24,12 +24,14 @@ public class EnemyBehaviour : CharacterBehaviour
     public List<EnemyAttack> enemyAttacks;
 
     int currentPhase;
+
     public EnemyAttack nextAttack;
 
-    protected override void Start()
+    protected override void Awake()
     {
-        base.Start();
+        base.Awake();
         currentPhase = 1;
+        FightSystem.instance.uiManager.ChangePhaseColor(phaseColors.Evaluate(1-(currentPhase/3f)));
     }
 
     protected override void CheckDeath()
@@ -41,25 +43,22 @@ public class EnemyBehaviour : CharacterBehaviour
             {
                 isAlive = false;
                 currentHP = 0;
+                FightSystem.instance.WinLose(false);
                 return;
             }
+            FightSystem.instance.uiManager.ChangePhaseColor(phaseColors.Evaluate(1- (currentPhase / 3f)));
             currentHP = maxHP;
         }
     }
 
     public void ChoseNextAttack()
     {
+        List<EnemyAttack> possibleAttacks = enemyAttacks.FindAll(x => x.phase == currentPhase);
         if (currentHP == maxHP)
         {
-            nextAttack = enemyAttacks
-                .FindAll(x => x.phase == currentPhase
-                && x.type != EnemyAttacksType.Heal)[Random.Range(0, 2)];
+            possibleAttacks.Remove(enemyAttacks.Find(x => x.type == EnemyAttacksType.Heal));
         }
-        else
-        {
-            nextAttack = enemyAttacks
-                .FindAll(x => x.phase == currentPhase)[Random.Range(0, 3)];
-        }
+        nextAttack = possibleAttacks[Random.Range(0, possibleAttacks.Count)];
     }
 
     public override void TakeDamage(int damage)

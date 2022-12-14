@@ -120,5 +120,18 @@ public class FightSystem : MonoBehaviour
                 return true;
         }
     }
+
+    public void WinLose(bool win)
+    {
+        currentFightStep = FightStep.EndFight;
+        if (win)
+        {
+            Debug.Log("Partie gagnée");
+        }
+        else
+        {
+            Debug.Log("Partie perdue");
+        }
+    }
 }
 

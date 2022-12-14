@@ -818,6 +818,8 @@ MonoBehaviour:
   enemy: {fileID: 2118445655}
   enemyHealthBar: {fileID: 2000643800}
   actionPoint: {fileID: 688173551}
+  nbCardInDiscardPile: {fileID: 336541910}
+  nbCardInDeck: {fileID: 1792828692}
 --- !u!1 &1252268614
 GameObject:
   m_ObjectHideFlags: 0

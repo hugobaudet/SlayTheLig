@@ -10,17 +10,19 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: bd8213ed0642d254baac848a60cbd411, type: 3}
-  m_Name: MacDoChaussette
+  m_Name: MacDoChaussetteGala
   m_EditorClassIdentifier: 
-  cardName: MacDoChaussette
-  attackDescription: "Mais j'ai pas c'te r\xE9f"
-  cardSprite: {fileID: 21300000, guid: 771a7fd8dc6a1944eb6eb0f7c2112841, type: 3}
+  cardName: MacDoChaussetteGala
+  attackDescription: "Inflige 5 d\xE9g\xE2ts. Combo X3 avec la chaussette de Chlo\xE9."
+  cardSprite: {fileID: 21300000, guid: 675fcc6c843d16c4eab6e14155df2ef3, type: 3}
   actionCost: 2
   attackType: 1
-  basicDamage: 1
-  comboDamage: 10
+  noComboAttackType: 0
+  basicDamage: 5
+  comboDamage: 15
   basicHeal: 0
   basicDefense: 0
+  buffPower: 0
   comboPieces:
-  - card: {fileID: 11400000}
-    number: 2
+  - card: {fileID: 11400000, guid: 3dc3026b3ec72254ea62c761fbe9c136, type: 2}
+    number: 1

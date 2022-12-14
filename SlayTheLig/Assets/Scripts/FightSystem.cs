@@ -52,6 +52,7 @@ public class FightSystem : MonoBehaviour
         StartTurn();
         enemy.StartRound();
         uiManager.UpdateUIActionPoint();
+        uiManager.UpdateUIArmour();
     }
 
     void StartTurn()
@@ -100,7 +101,23 @@ public class FightSystem : MonoBehaviour
                 }
                 else
                 {
-                    enemy.TakeDamage(attack.basicDamage);
+                    switch (attack.noComboAttackType)
+                    {
+                        case AttackType.SimpleAttack:
+                            enemy.TakeDamage(attack.basicDamage);
+                            break;
+                        case AttackType.Heal:
+                            player.HealCharacter(attack.basicHeal);
+                            break;
+                        case AttackType.Buff:
+                            player.ApplyBuff(attack);
+                            break;
+                        case AttackType.Defense:
+                            player.AddArmour(attack.basicDefense);
+                            break;
+                        default:
+                            break;
+                    }
                     cardManager.RemoveCardAt(index);
                 }
                 return true;

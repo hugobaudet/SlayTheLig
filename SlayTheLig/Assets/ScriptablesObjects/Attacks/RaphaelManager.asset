@@ -1,0 +1,32 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bd8213ed0642d254baac848a60cbd411, type: 3}
+  m_Name: RaphaelManager
+  m_EditorClassIdentifier: 
+  cardName: "Manager Rapha\xEBl"
+  attackDescription: "Un beau goss \xE0 l'\xE9tat pur. Multiplie les effets des d\xE9g\xE2ts
+    par 2."
+  cardSprite: {fileID: 21300000, guid: 577d01d7c3d5f664fa005bf05e13208b, type: 3}
+  actionCost: 4
+  attackType: 1
+  noComboAttackType: 3
+  noComboBuffAttackType: 0
+  basicDamage: 0
+  comboDamage: 50
+  basicHeal: 0
+  basicDefense: 0
+  buffPower: 2
+  comboPieces:
+  - card: {fileID: 11400000, guid: ea88f1ee7325a0b479963132477fa684, type: 2}
+    number: 1
+  - card: {fileID: 11400000, guid: 9eda428561668ce49b631abf84660cb9, type: 2}
+    number: 1

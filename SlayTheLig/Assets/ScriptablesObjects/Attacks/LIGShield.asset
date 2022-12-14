@@ -10,17 +10,18 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: bd8213ed0642d254baac848a60cbd411, type: 3}
-  m_Name: StageChezUbisoft
+  m_Name: LIGShield
   m_EditorClassIdentifier: 
-  cardName: Stage Chez Ubisoft
-  attackDescription: "Il en a un et pas des moindres ! Inflige 30 d\xE9g\xE2ts."
-  cardSprite: {fileID: 21300000, guid: 4d1ced6e53fd3d940a16109c95bb4ad8, type: 3}
+  cardName: LIGShield
+  attackDescription: "LIG \xE0 la rescousse ! Rend 40 PVs."
+  cardSprite: {fileID: 21300000, guid: 7c26cfff13593544dab1059772c02808, type: 3}
   actionCost: 6
-  attackType: 0
+  attackType: 4
   noComboAttackType: 0
-  basicDamage: 30
+  noComboBuffAttackType: 0
+  basicDamage: 0
   comboDamage: 0
   basicHeal: 0
-  basicDefense: 0
+  basicDefense: 40
   buffPower: 0
   comboPieces: []

@@ -1,0 +1,27 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bd8213ed0642d254baac848a60cbd411, type: 3}
+  m_Name: "MrLePr\xE9sident"
+  m_EditorClassIdentifier: 
+  cardName: "Mr. Le Pr\xE9sident"
+  attackDescription: Mister President !!! Multiplie tous les effets par 3.
+  cardSprite: {fileID: 21300000, guid: aa28be9e15e2be0448a5af2dc69ec965, type: 3}
+  actionCost: 6
+  attackType: 3
+  noComboAttackType: 0
+  noComboBuffAttackType: 0
+  basicDamage: 0
+  comboDamage: 0
+  basicHeal: 0
+  basicDefense: 0
+  buffPower: 3
+  comboPieces: []

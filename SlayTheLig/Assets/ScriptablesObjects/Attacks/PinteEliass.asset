@@ -1,0 +1,33 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bd8213ed0642d254baac848a60cbd411, type: 3}
+  m_Name: PinteEliass
+  m_EditorClassIdentifier: 
+  cardName: Pinte d'IceTea
+  attackDescription: Octroie 10 d'armures. Fait partie de la combo ultime !
+  cardSprite: {fileID: 21300000, guid: 284ffb42b4f45b74c8401decc58d057e, type: 3}
+  actionCost: 1
+  attackType: 1
+  noComboAttackType: 4
+  noComboBuffAttackType: 0
+  basicDamage: 0
+  comboDamage: 30
+  basicHeal: 0
+  basicDefense: 10
+  buffPower: 0
+  comboPieces:
+  - card: {fileID: 11400000, guid: dd2d1b2b473fdbc468e1d88b4826365a, type: 2}
+    number: 1
+  - card: {fileID: 11400000, guid: 9309d91bc5f63eb448f7f8d858b10eb4, type: 2}
+    number: 1
+  - card: {fileID: 11400000, guid: 54884a469f927444397d3fbc3a2a8962, type: 2}
+    number: 1

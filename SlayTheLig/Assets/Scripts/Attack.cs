@@ -20,6 +20,8 @@ public class Attack : ScriptableObject
     public int comboDamage;
     public int basicHeal;
     public int basicDefense;
+    [Range(2, 3)]
+    public int buffPower;
 
     public List<Card> comboPieces;
 }

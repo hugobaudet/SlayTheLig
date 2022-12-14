@@ -16,14 +16,6 @@ public enum FightStep
 }
 
 [System.Serializable]
-public class Stage
-{
-    public string name;
-
-    public List<EnemyBehaviour> enemyList;
-}
-
-[System.Serializable]
 public class Card
 {
     public Attack card;
@@ -54,24 +46,12 @@ public class FightSystem : MonoBehaviour
 
     public List<Card> deck;
 
-    [SerializeField]
-    private List<Stage> stages;
-
     private void Start()
     {
-        currentFightStep = FightStep.AnimationEntry;
-        currentFightStep = FightStep.PlayerChoice;
         cardManager.Initialize();
-        player.StartRound();
-        uiManager.UpdateUIActionPoint();
-    }
-
-    public void EndTurn()
-    {
-        if (currentFightStep != FightStep.PlayerChoice) return;
-        currentFightStep = FightStep.EnemyAttack;
-        player.isTurnBuffed = false;
         StartTurn();
+        enemy.StartRound();
+        uiManager.UpdateUIActionPoint();
     }
 
     void StartTurn()
@@ -79,7 +59,23 @@ public class FightSystem : MonoBehaviour
         currentFightStep = FightStep.PlayerChoice;
         cardManager.ResetCardsInHand();
         player.StartRound();
+        enemy.ChoseNextAttack();
         uiManager.UpdateUIActionPoint();
+
+    }
+
+    public void EndTurn()
+    {
+        if (currentFightStep != FightStep.PlayerChoice) return;
+        StartEnemyTurn();
+    }
+
+    void StartEnemyTurn()
+    {
+        enemy.StartRound();
+        currentFightStep = FightStep.EnemyAttack;
+        enemy.PlayNextAttack();
+        StartTurn();
     }
 
     public bool PlayACard(Attack attack, int index)
@@ -109,11 +105,11 @@ public class FightSystem : MonoBehaviour
                 }
                 return true;
             case AttackType.Heal:
-                player.HealPlayer(attack.basicHeal);
+                player.HealCharacter(attack.basicHeal);
                 cardManager.RemoveCardAt(index);
                 return true;
             case AttackType.Buff:
-                player.isTurnBuffed = true;
+                player.ApplyBuff(attack);
                 cardManager.RemoveCardAt(index);
                 return true;
             case AttackType.Defense:

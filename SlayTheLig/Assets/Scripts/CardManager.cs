@@ -34,13 +34,16 @@ public class CardManager : MonoBehaviour
         List<Attack> copyHand = new List<Attack>(currentHand);
         foreach (Card item in attackCombo.comboPieces)
         {
-            if (!copyHand.Contains(item.card))
+            for (int i = 0; i < item.number; i++)
             {
-                return false;
-            }
-            else
-            {
-                copyHand.Remove(item.card);
+                if (!copyHand.Contains(item.card))
+                {
+                    return false;
+                }
+                else
+                {
+                    copyHand.Remove(item.card);
+                }
             }
         }
         return true;

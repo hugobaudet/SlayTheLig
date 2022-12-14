@@ -17,6 +17,6 @@ public class UIManager : MonoBehaviour
 
     public void UpdateUIActionPoint()
     {
-        actionPoint.text = player.currentActionCost + " / 3";
+        actionPoint.text = player.currentActionCost + " / " + player.maxActionCost;
     }
 }

@@ -10,11 +10,14 @@ public class PlayerBehaviour : CharacterBehaviour
     [HideInInspector]
     public int currentActionCost;
 
-    public bool isTurnBuffed;
+    [HideInInspector]
+    public int isTurnBuffed;
 
-    public void StartRound()
+    public override void StartRound()
     {
+        base.StartRound();
         currentActionCost = maxActionCost;
+        isTurnBuffed = 1;
     }
 
     public bool CanPlayACard(Attack attack)
@@ -22,9 +25,14 @@ public class PlayerBehaviour : CharacterBehaviour
         return currentActionCost >= attack.actionCost;
     }
 
-    public void HealPlayer(int healAmount)
+    public void ApplyBuff(Attack attack)
     {
-        healAmount *= isTurnBuffed? 2 : 1;
-        currentHP += Mathf.Clamp(healAmount, 0, maxHP - currentHP);
+        isTurnBuffed *= attack.buffPower;
+    }
+
+    public override void HealCharacter(int healAmount)
+    {
+        healAmount *= isTurnBuffed;
+        base.HealCharacter(healAmount);
     }
 }

@@ -34,6 +34,8 @@ public class FightSystem : MonoBehaviour
             return;
         }
         instance = this;
+        player.InitializeCharacter();
+        enemy.InitializeCharacter();
     }
 
     public PlayerBehaviour player;

@@ -7,18 +7,24 @@ public class PlayerBehaviour : CharacterBehaviour
 {
     public int maxActionCost;
 
-    private int currentActionCost;
+    [HideInInspector]
+    public int currentActionCost;
 
     public bool isTurnBuffed;
 
-    void StartMatch()
+    public void StartRound()
     {
-        currentHP = maxHP;
         currentActionCost = maxActionCost;
     }
 
     public bool CanPlayACard(Attack attack)
     {
         return currentActionCost >= attack.actionCost;
+    }
+
+    public void HealPlayer(int healAmount)
+    {
+        healAmount *= isTurnBuffed? 2 : 1;
+        currentHP += Mathf.Clamp(healAmount, 0, maxHP - currentHP);
     }
 }

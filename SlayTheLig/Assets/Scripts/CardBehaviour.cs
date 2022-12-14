@@ -1,24 +1,30 @@
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 using UnityEngine.EventSystems;
+using UnityEngine.UI;
 
 public class CardBehaviour : MonoBehaviour, IDragHandler, IPointerEnterHandler, IPointerExitHandler , IBeginDragHandler, IEndDragHandler
 {
-    private const float HEIGHT_CARD_PLAYED = 100f;
-
     private RectTransform draggingObject;
     private Vector3 globalMousePosition;
     private Vector3 initialPosition;
     bool isHidden;
 
-    private Attack attack;
+    [HideInInspector]
+    public Attack attack;
+    
+    [SerializeField]
+    Image image;
 
+    [SerializeField]
+    public TMP_Text cardActionPoint, cardDescription;
 
     private void Awake()
     {
         draggingObject = transform as RectTransform;
-        initialPosition = transform.position;
+        initialPosition = transform.localPosition;
         isHidden = false;
         ChangeAppearance(true);
     }
@@ -27,13 +33,18 @@ public class CardBehaviour : MonoBehaviour, IDragHandler, IPointerEnterHandler, 
     {
         if (isHidden == this.isHidden) return;
         this.isHidden = isHidden;
-        transform.position = initialPosition + (Vector3.down * 200 * (isHidden ? 1 : 0));
+        gameObject.SetActive(!isHidden);
+        
     }
 
     public void SetNewAttack(Attack attack)
     {
         this.attack = attack;
+        image.sprite = attack.cardSprite;
+        cardActionPoint.text = attack.actionCost.ToString();
+        cardDescription.text = attack.attackDescription.ToString();
         ChangeAppearance(false);
+        transform.localPosition = initialPosition;
     }
 
     public void OnDrag(PointerEventData eventData)
@@ -61,14 +72,15 @@ public class CardBehaviour : MonoBehaviour, IDragHandler, IPointerEnterHandler, 
 
     public void OnEndDrag(PointerEventData eventData)
     {
-        if (globalMousePosition.y >= HEIGHT_CARD_PLAYED)
+        RectTransform playerRect = FightSystem.instance.player.transform as RectTransform;
+        if (transform.localPosition.y >= playerRect.localPosition.y - (playerRect.rect.height / 2))
         {
-            if (FightSystem.instance.PlayACard(attack))
+            if (FightSystem.instance.PlayACard(attack, transform.GetSiblingIndex()))
             {
                 ChangeAppearance(true);
                 return;
             }
         }
-        transform.position = initialPosition;
+        transform.localPosition = initialPosition;
     }
 }

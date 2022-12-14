@@ -13,8 +13,8 @@ MonoBehaviour:
   m_Name: MacDoChaussette
   m_EditorClassIdentifier: 
   cardName: MacDoChaussette
-  attackDescription: 
-  cardSprite: {fileID: 0}
+  attackDescription: "Mais j'ai pas c'te r\xE9f"
+  cardSprite: {fileID: 21300000, guid: 771a7fd8dc6a1944eb6eb0f7c2112841, type: 3}
   actionCost: 2
   attackType: 1
   basicDamage: 1

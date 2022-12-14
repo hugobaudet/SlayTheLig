@@ -13,8 +13,8 @@ MonoBehaviour:
   m_Name: FroggyHeal
   m_EditorClassIdentifier: 
   cardName: FroggyHeal
-  attackDescription: 
-  cardSprite: {fileID: 0}
+  attackDescription: "Parce que j'ai la r\xE9f"
+  cardSprite: {fileID: 21300000, guid: 2583aa2c649a9184cbc5d3cf47617f65, type: 3}
   actionCost: 1
   attackType: 2
   basicDamage: 0

@@ -8,26 +8,30 @@ public class CharacterBehaviour : MonoBehaviour
     protected int maxHP;
 
     protected int currentHP;
+    protected int armourAmount;
     protected bool isAlive;
 
     protected virtual void Start()
     {
         isAlive = true;
         currentHP = maxHP;
+        armourAmount = 0;
     }
 
     public virtual void TakeDamage(int damage)
     {
-        if (FightSystem.instance.player.isTurnBuffed)
-        {
-            damage *= 2;
-        }
+        damage *= FightSystem.instance.player.isTurnBuffed ? 2 : 1;
+        damage -= armourAmount;
         currentHP -= Mathf.Clamp(damage, 0, currentHP);
-        Debug.Log(name + " a actuellement " + currentHP + " HPs!");
         if (currentHP <= 0)
         {
             isAlive = false;
             currentHP = 0;
         }
+    }
+
+    public void AddArmour(int armourAmount)
+    {
+        this.armourAmount += armourAmount;
     }
 }

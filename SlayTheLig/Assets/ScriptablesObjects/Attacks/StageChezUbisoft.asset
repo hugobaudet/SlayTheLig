@@ -13,8 +13,8 @@ MonoBehaviour:
   m_Name: StageChezUbisoft
   m_EditorClassIdentifier: 
   cardName: Stage Chez Ubisoft
-  attackDescription: 
-  cardSprite: {fileID: 0}
+  attackDescription: "LA L\xC9GENDE \xE0 l'\xE9tat pur, Morigan"
+  cardSprite: {fileID: 21300000, guid: 04286c861a5a9744d84f303fad3c87c1, type: 3}
   actionCost: 3
   attackType: 0
   basicDamage: 10

@@ -13,8 +13,8 @@ MonoBehaviour:
   m_Name: Requin
   m_EditorClassIdentifier: 
   cardName: Requin
-  attackDescription: 
-  cardSprite: {fileID: 0}
+  attackDescription: GROOOAA
+  cardSprite: {fileID: 21300000, guid: 02f7f95024a250845b92f14b5124e17f, type: 3}
   actionCost: 2
   attackType: 0
   basicDamage: 6

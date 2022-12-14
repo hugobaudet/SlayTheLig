@@ -63,13 +63,12 @@ public class EnemyBehaviour : CharacterBehaviour
 
     public override void TakeDamage(int damage)
     {
-        damage *= FightSystem.instance.player.isTurnBuffed;
+        damage *= FightSystem.instance.player.isTurnBuffed * FightSystem.instance.player.isDamageBuffed;
         base.TakeDamage(damage);
     }
 
     public void PlayNextAttack()
     {
-        Debug.Log("Valeur de " + nextAttack.type + " = " + nextAttack.value);
         switch (nextAttack.type)
         {
             case EnemyAttacksType.SimpleAttack:

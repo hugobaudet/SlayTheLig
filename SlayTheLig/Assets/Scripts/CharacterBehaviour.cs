@@ -7,8 +7,8 @@ public class CharacterBehaviour : MonoBehaviour
     [SerializeField]
     public int maxHP;
 
-    public int currentHP;
-    protected int armourAmount;
+    [HideInInspector]
+    public int currentHP, armourAmount;
     protected bool isAlive;
 
     public Gradient phaseColors;
@@ -23,11 +23,21 @@ public class CharacterBehaviour : MonoBehaviour
     public virtual void StartRound()
     {
         armourAmount = 0;
+        FightSystem.instance.uiManager.UpdateUIArmour();
     }
 
     public virtual void TakeDamage(int damage)
     {
         damage -= armourAmount;
+        if (damage > 0)
+        {
+            armourAmount = 0;
+        }
+        else
+        {
+            armourAmount -= damage;
+        }
+        FightSystem.instance.uiManager.UpdateUIArmour();
         currentHP -= Mathf.Clamp(damage, 0, currentHP);
         Debug.Log(name + " a pris " + Mathf.Clamp(damage, 0, currentHP) + " damages, il lui reste " + currentHP + "HPs.");
         CheckDeath();
@@ -45,11 +55,11 @@ public class CharacterBehaviour : MonoBehaviour
         }
     }
 
-    public void AddArmour(int armourAmount)
+    public virtual void AddArmour(int armourAmount)
     {
         this.armourAmount += armourAmount;
         Debug.Log(name + " a gagné " + armourAmount + " d'armures, il possède " + this.armourAmount + " armures.");
-        FightSystem.instance.uiManager.UpdateUIHealthBar();
+        FightSystem.instance.uiManager.UpdateUIArmour();
     }
 
     public virtual void HealCharacter(int healAmount)

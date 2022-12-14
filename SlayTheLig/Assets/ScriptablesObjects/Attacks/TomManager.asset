@@ -1,0 +1,32 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bd8213ed0642d254baac848a60cbd411, type: 3}
+  m_Name: TomManager
+  m_EditorClassIdentifier: 
+  cardName: Manager Antoine
+  attackDescription: "Un beau goss \xE0 l'\xE9tat pur. Multiplie les effets de l'armure
+    par 2."
+  cardSprite: {fileID: 21300000, guid: c57eda7aca211e547907096cf45d28a8, type: 3}
+  actionCost: 4
+  attackType: 1
+  noComboAttackType: 3
+  noComboBuffAttackType: 4
+  basicDamage: 0
+  comboDamage: 50
+  basicHeal: 0
+  basicDefense: 0
+  buffPower: 2
+  comboPieces:
+  - card: {fileID: 11400000, guid: 9eda428561668ce49b631abf84660cb9, type: 2}
+    number: 1
+  - card: {fileID: 11400000, guid: bc84a5fc51314bc49a2e115df14632da, type: 2}
+    number: 1

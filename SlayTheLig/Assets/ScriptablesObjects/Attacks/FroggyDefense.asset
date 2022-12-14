@@ -10,15 +10,18 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: bd8213ed0642d254baac848a60cbd411, type: 3}
-  m_Name: Roller
+  m_Name: FroggyDefense
   m_EditorClassIdentifier: 
-  cardName: "Chute \xE0 roller"
-  attackDescription: "La chute est si vite arriv\xE9e"
-  cardSprite: {fileID: 21300000, guid: 1a45ccdc9b5c82e42bb3ddeb55312645, type: 3}
-  actionCost: 1
-  attackType: 0
-  basicDamage: 3
+  cardName: FroggyDefense
+  attackDescription: Une grenouille porte-bonheur. Octroie 20 d'armure.
+  cardSprite: {fileID: 21300000, guid: cf50ae58a5e186b4b8e6f7b8c35b2a25, type: 3}
+  actionCost: 7
+  attackType: 4
+  noComboAttackType: 0
+  noComboBuffAttackType: 0
+  basicDamage: 0
   comboDamage: 0
   basicHeal: 0
-  basicDefense: 0
+  basicDefense: 10
+  buffPower: 2
   comboPieces: []

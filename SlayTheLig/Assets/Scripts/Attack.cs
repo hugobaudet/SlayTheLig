@@ -11,10 +11,13 @@ public class Attack : ScriptableObject
     
     public Sprite cardSprite;
 
-    [Range(0, 3)]
+    [Range(0, 10)]
     public int actionCost;
 
     public AttackType attackType;
+    public AttackType noComboAttackType;
+    public AttackType noComboBuffAttackType;
+
 
     public int basicDamage;
     public int comboDamage;

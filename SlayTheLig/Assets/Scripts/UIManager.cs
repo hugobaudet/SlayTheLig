@@ -18,11 +18,7 @@ public class UIManager : MonoBehaviour
     private Image enemyHealthBar;
 
     [SerializeField]
-    private TMP_Text actionPoint;
-    [SerializeField]
-    private TMP_Text nbCardInDiscardPile;
-    [SerializeField]
-    private TMP_Text nbCardInDeck;
+    private TMP_Text actionPoint, nbCardInDiscardPile, nbCardInDeck, nbArmourPlayer, nbAmourEnemy;
 
     public void UpdateUIActionPoint()
     {
@@ -33,6 +29,12 @@ public class UIManager : MonoBehaviour
     {
         nbCardInDeck.text = deck.ToString();
         nbCardInDiscardPile.text = discard.ToString();
+    }
+
+    public void UpdateUIArmour()
+    {
+        nbArmourPlayer.text = player.armourAmount.ToString();
+        nbAmourEnemy.text = enemy.armourAmount.ToString();
     }
 
     public void UpdateUIHealthBar()

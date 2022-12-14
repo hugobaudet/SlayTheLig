@@ -12,13 +12,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bd8213ed0642d254baac848a60cbd411, type: 3}
   m_Name: Requin
   m_EditorClassIdentifier: 
-  cardName: Requin
-  attackDescription: GROOOAA
-  cardSprite: {fileID: 21300000, guid: 02f7f95024a250845b92f14b5124e17f, type: 3}
-  actionCost: 2
+  cardName: MascotteLIG
+  attackDescription: "GROOOOAAAAAAMMM !!! Inflige 50 d\xE9g\xE2ts."
+  cardSprite: {fileID: 21300000, guid: a1e5a186b0f2c7947943857bfec62cd3, type: 3}
+  actionCost: 8
   attackType: 0
-  basicDamage: 6
+  noComboAttackType: 0
+  basicDamage: 50
   comboDamage: 0
   basicHeal: 0
   basicDefense: 0
+  buffPower: 0
   comboPieces: []

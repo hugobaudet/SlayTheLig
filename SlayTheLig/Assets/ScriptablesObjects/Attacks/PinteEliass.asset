@@ -10,23 +10,24 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: bd8213ed0642d254baac848a60cbd411, type: 3}
-  m_Name: Yann
+  m_Name: PinteEliass
   m_EditorClassIdentifier: 
-  cardName: Yann
-  attackDescription: Sorry mais PTRD T KI ?
-  cardSprite: {fileID: 21300000, guid: 62ce01ddca719d34ea9648c586a7cc94, type: 3}
-  actionCost: 2
+  cardName: Pinte d'IceTea
+  attackDescription: Octroie 10 d'armures. Fait partie de la combo ultime !
+  cardSprite: {fileID: 21300000, guid: 284ffb42b4f45b74c8401decc58d057e, type: 3}
+  actionCost: 1
   attackType: 1
-  basicDamage: 4
+  noComboAttackType: 4
+  noComboBuffAttackType: 0
+  basicDamage: 0
   comboDamage: 30
   basicHeal: 0
-  basicDefense: 0
+  basicDefense: 10
+  buffPower: 0
   comboPieces:
   - card: {fileID: 11400000, guid: dd2d1b2b473fdbc468e1d88b4826365a, type: 2}
     number: 1
-  - card: {fileID: 11400000, guid: 6f274fbbf48ad3343bc1a9486cef3a61, type: 2}
+  - card: {fileID: 11400000, guid: 9309d91bc5f63eb448f7f8d858b10eb4, type: 2}
     number: 1
-  - card: {fileID: 11400000, guid: ab21c01ccf9ba2c4ab67d4ff318d6e20, type: 2}
-    number: 1
-  - card: {fileID: 11400000}
+  - card: {fileID: 11400000, guid: 54884a469f927444397d3fbc3a2a8962, type: 2}
     number: 1

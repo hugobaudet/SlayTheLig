@@ -56,7 +56,10 @@ public class EnemyBehaviour : CharacterBehaviour
         List<EnemyAttack> possibleAttacks = enemyAttacks.FindAll(x => x.phase == currentPhase);
         if (currentHP == maxHP)
         {
-            possibleAttacks.Remove(enemyAttacks.Find(x => x.type == EnemyAttacksType.Heal));
+            foreach (EnemyAttack item in enemyAttacks.FindAll(x => x.type == EnemyAttacksType.Heal))
+            {
+                possibleAttacks.Remove(item);
+            }
         }
         nextAttack = possibleAttacks[Random.Range(0, possibleAttacks.Count)];
     }

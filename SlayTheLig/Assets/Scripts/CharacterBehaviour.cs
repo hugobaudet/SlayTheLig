@@ -28,15 +28,9 @@ public class CharacterBehaviour : MonoBehaviour
 
     public virtual void TakeDamage(int damage)
     {
+        int tmpDamage = damage;
         damage -= armourAmount;
-        if (damage > 0)
-        {
-            armourAmount = 0;
-        }
-        else
-        {
-            armourAmount -= damage;
-        }
+        armourAmount -= Mathf.Clamp(tmpDamage, 0, armourAmount);
         FightSystem.instance.uiManager.UpdateUIArmour();
         currentHP -= Mathf.Clamp(damage, 0, currentHP);
         Debug.Log(name + " a pris " + Mathf.Clamp(damage, 0, currentHP) + " damages, il lui reste " + currentHP + "HPs.");

@@ -13,7 +13,7 @@ public class CharacterBehaviour : MonoBehaviour
 
     public Gradient phaseColors;
 
-    protected virtual void Awake()
+    public virtual void InitializeCharacter()
     {
         isAlive = true;
         currentHP = maxHP;

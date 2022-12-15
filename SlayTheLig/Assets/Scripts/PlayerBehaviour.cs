@@ -34,16 +34,16 @@ public class PlayerBehaviour : CharacterBehaviour
         {
             case AttackType.SimpleAttack:
             case AttackType.ComboAttack:
-                isDamageBuffed *= 2;
+                isDamageBuffed *= attack.buffPower;
                 break;
             case AttackType.Heal:
-                isHealBuffed *= 2;
+                isHealBuffed *= attack.buffPower;
                 break;
             case AttackType.Buff:
-                isTurnBuffed *= 2;
+                isTurnBuffed *= attack.buffPower;
                 break;
             case AttackType.Defense:
-                isHealBuffed *= 2;
+                isArmourBuffed *= attack.buffPower;
                 break;
             default:
                 break;

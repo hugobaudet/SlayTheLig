@@ -96,32 +96,33 @@ public class FightSystem : MonoBehaviour
             case AttackType.ComboAttack:
                 if (cardManager.IsComboPossible(attack))
                 {
-                    Debug.Log("COMBO");
-                    enemy.TakeDamage(attack.comboDamage);
-                    cardManager.RemoveCardAt(index);
-                    cardManager.RemoveComboPieces(attack);
-                }
-                else
-                {
-                    switch (attack.noComboAttackType)
+                    if (true)
                     {
-                        case AttackType.SimpleAttack:
-                            enemy.TakeDamage(attack.basicDamage);
-                            break;
-                        case AttackType.Heal:
-                            player.HealCharacter(attack.basicHeal);
-                            break;
-                        case AttackType.Buff:
-                            player.ApplyBuff(attack);
-                            break;
-                        case AttackType.Defense:
-                            player.AddArmour(attack.basicDefense);
-                            break;
-                        default:
-                            break;
+                        Debug.Log("COMBO");
+                        enemy.TakeDamage(attack.comboDamage);
+                        cardManager.RemoveCardAt(index);
+                        cardManager.RemoveComboPieces(attack);
+                        return true;
                     }
-                    cardManager.RemoveCardAt(index);
                 }
+                switch (attack.noComboAttackType)
+                {
+                    case AttackType.SimpleAttack:
+                        enemy.TakeDamage(attack.basicDamage);
+                        break;
+                    case AttackType.Heal:
+                        player.HealCharacter(attack.basicHeal);
+                        break;
+                    case AttackType.Buff:
+                        player.ApplyBuff(attack);
+                        break;
+                    case AttackType.Defense:
+                        player.AddArmour(attack.basicDefense);
+                        break;
+                    default:
+                        break;
+                }
+                cardManager.RemoveCardAt(index);
                 return true;
             case AttackType.Heal:
                 player.HealCharacter(attack.basicHeal);

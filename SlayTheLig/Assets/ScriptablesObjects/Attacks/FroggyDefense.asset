@@ -22,6 +22,6 @@ MonoBehaviour:
   basicDamage: 0
   comboDamage: 0
   basicHeal: 0
-  basicDefense: 10
+  basicDefense: 20
   buffPower: 2
   comboPieces: []

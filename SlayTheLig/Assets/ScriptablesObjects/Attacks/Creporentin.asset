@@ -16,7 +16,7 @@ MonoBehaviour:
   attackDescription: "Chef Corentin et ces cr\xEApes d\xE9barquent ! Soigne de 25
     PVs"
   cardSprite: {fileID: 21300000, guid: f943ccfcc95efca41af3826697acd5bc, type: 3}
-  actionCost: 4
+  actionCost: 3
   attackType: 2
   noComboAttackType: 0
   noComboBuffAttackType: 0

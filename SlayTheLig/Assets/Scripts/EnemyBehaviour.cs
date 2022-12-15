@@ -27,9 +27,9 @@ public class EnemyBehaviour : CharacterBehaviour
 
     public EnemyAttack nextAttack;
 
-    protected override void Awake()
+    public override void InitializeCharacter()
     {
-        base.Awake();
+        base.InitializeCharacter();
         currentPhase = 1;
         FightSystem.instance.uiManager.ChangePhaseColor(phaseColors.Evaluate(1-(currentPhase/3f)));
     }

@@ -27,6 +27,10 @@ public class CardManager : MonoBehaviour
             currentHand.Add(null);
         }
         ResetCardsInHand();
+        for (int i = 0; i < cardBehaviours.Count; i++)
+        {
+            cardBehaviours[i].cardIndex = i;
+        }
     }
 
     public bool IsComboPossible(Attack attackCombo)
@@ -51,22 +55,26 @@ public class CardManager : MonoBehaviour
 
     public void RemoveCardAt(int index)
     {
+        if (currentHand[index] == null) return;
         currentDiscardPile.Add(currentHand[index]);
         currentHand[index] = null;
+        cardBehaviours[index].ChangeAppearance(true);
         FightSystem.instance.uiManager.UpdateUIPiles(currentDeck.Count, currentDiscardPile.Count);
     }
 
     public void RemoveComboPieces(Attack attack)
     {
-        for (int i = 0; i < cardBehaviours.Count; i++)
+        for (int i = 0; i < attack.comboPieces.Count; i++)
         {
-            for (int y = 0; y < attack.comboPieces.Count; y++)
+            for (int j = 0; j < attack.comboPieces[i].number; j++)
             {
-                if (attack.comboPieces[y].card == cardBehaviours[i].attack)
+                for (int k = 0; k < cardBehaviours.Count; k++)
                 {
-                    RemoveCardAt(i);
-                    cardBehaviours[i].ChangeAppearance(true);
-                    break;
+                    if (attack.comboPieces[i].card == cardBehaviours[k].attack)
+                    {
+                        RemoveCardAt(k);
+                        break;
+                    }
                 }
             }
         }
@@ -74,14 +82,6 @@ public class CardManager : MonoBehaviour
 
     public void ResetCardsInHand()
     {
-        //for (int i = 0; i < currentHand.Count; i++)
-        //{
-        //    if (currentHand[i] != null)
-        //    {
-        //        currentDeck.Add(currentHand[i]);
-        //        currentHand[i] = null;
-        //    }
-        //}
         for (int i = 0; i < cardBehaviours.Count; i++)
         {
             cardBehaviours[i].ChangeAppearance(true);

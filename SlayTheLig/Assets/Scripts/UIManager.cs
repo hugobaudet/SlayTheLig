@@ -9,16 +9,18 @@ public class UIManager : MonoBehaviour
 {
     [SerializeField]
     private PlayerBehaviour player;
-    [SerializeField]
-    private Image playerHealthBar;
 
     [SerializeField]
     private EnemyBehaviour enemy;
+
     [SerializeField]
-    private Image enemyHealthBar;
+    private Image playerHealthBar, enemyHealthBar;
 
     [SerializeField]
     private TMP_Text actionPoint, nbCardInDiscardPile, nbCardInDeck, nbArmourPlayer, nbAmourEnemy;
+
+    [SerializeField]
+    private GameObject uiCombo;
 
     public void UpdateUIActionPoint()
     {
@@ -47,5 +49,16 @@ public class UIManager : MonoBehaviour
     public void ChangePhaseColor(Color color)
     {
         enemyHealthBar.color = color;
+    }
+
+    public void DisplayUICombo()
+    {
+        uiCombo.SetActive(true);
+    }
+
+    public void UseCombo(bool use)
+    {
+        FightSystem.instance.PlayCombo(use);
+        uiCombo.SetActive(false);
     }
 }

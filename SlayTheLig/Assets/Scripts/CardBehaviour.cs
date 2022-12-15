@@ -1,3 +1,4 @@
+using DG.Tweening;
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
@@ -10,7 +11,11 @@ public class CardBehaviour : MonoBehaviour, IDragHandler, IPointerEnterHandler, 
     private RectTransform draggingObject;
     private Vector3 globalMousePosition;
     private Vector3 initialPosition;
+    private Vector3 initialGlobalPosition;
     bool isHidden;
+
+    [HideInInspector]
+    public int cardIndex;
 
     [HideInInspector]
     public Attack attack;
@@ -25,6 +30,7 @@ public class CardBehaviour : MonoBehaviour, IDragHandler, IPointerEnterHandler, 
     {
         draggingObject = transform as RectTransform;
         initialPosition = transform.localPosition;
+        initialGlobalPosition = transform.position;
         isHidden = false;
         ChangeAppearance(true);
     }
@@ -34,7 +40,6 @@ public class CardBehaviour : MonoBehaviour, IDragHandler, IPointerEnterHandler, 
         if (isHidden == this.isHidden) return;
         this.isHidden = isHidden;
         gameObject.SetActive(!isHidden);
-        
     }
 
     public void SetNewAttack(Attack attack)
@@ -57,12 +62,16 @@ public class CardBehaviour : MonoBehaviour, IDragHandler, IPointerEnterHandler, 
 
     public void OnPointerEnter(PointerEventData eventData)
     {
-        
+        Debug.Log("Salue");
+        transform.DOScale(Vector3.one * 1.5f, 1).SetEase(Ease.OutQuint);
+        transform.DOMoveY(initialGlobalPosition.y + 50, 1);
+        transform.SetAsLastSibling();
     }
 
     public void OnPointerExit(PointerEventData eventData)
     {
-        
+        transform.DOScale(Vector3.one, 1).SetEase(Ease.OutQuint);
+        transform.DOMoveY(initialGlobalPosition.y, 1);
     }
 
     public void OnBeginDrag(PointerEventData eventData)
@@ -75,7 +84,7 @@ public class CardBehaviour : MonoBehaviour, IDragHandler, IPointerEnterHandler, 
         RectTransform playerRect = FightSystem.instance.player.transform as RectTransform;
         if (transform.localPosition.y >= playerRect.localPosition.y - (playerRect.rect.height / 2))
         {
-            if (FightSystem.instance.PlayACard(attack, transform.GetSiblingIndex()))
+            if (FightSystem.instance.PlayACard(attack, cardIndex))
             {
                 ChangeAppearance(true);
                 return;

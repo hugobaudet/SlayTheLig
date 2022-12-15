@@ -74,31 +74,34 @@ public class CardManager : MonoBehaviour
 
     public void ResetCardsInHand()
     {
-        for (int i = 0; i < currentHand.Count; i++)
-        {
-            if (currentHand[i] != null)
-            {
-                currentDeck.Add(currentHand[i]);
-                currentHand[i] = null;
-            }
-        }
+        //for (int i = 0; i < currentHand.Count; i++)
+        //{
+        //    if (currentHand[i] != null)
+        //    {
+        //        currentDeck.Add(currentHand[i]);
+        //        currentHand[i] = null;
+        //    }
+        //}
         for (int i = 0; i < cardBehaviours.Count; i++)
         {
             cardBehaviours[i].ChangeAppearance(true);
         }
         for (int i = 0; i < 4; i++)
         {
-            if (currentDeck.Count != 0)
+            if (currentHand[i] == null)
             {
-                int index = Random.Range(0, currentDeck.Count);
-                currentHand[i] = currentDeck[index];
-                currentDeck.RemoveAt(index);
-            }
-            else
-            {
-                int index = Random.Range(0, currentDiscardPile.Count);
-                currentHand[i] = currentDiscardPile[index];
-                currentDiscardPile.RemoveAt(index);
+                if (currentDeck.Count != 0)
+                {
+                    int index = Random.Range(0, currentDeck.Count);
+                    currentHand[i] = currentDeck[index];
+                    currentDeck.RemoveAt(index);
+                }
+                else
+                {
+                    int index = Random.Range(0, currentDiscardPile.Count);
+                    currentHand[i] = currentDiscardPile[index];
+                    currentDiscardPile.RemoveAt(index);
+                }
             }
         }
         if (currentDeck.Count == 0)

@@ -366,3 +366,4 @@ MonoBehaviour:
   image: {fileID: 2832097806811389605}
   cardActionPoint: {fileID: 3950063239344724907}
   cardDescription: {fileID: 113300529732624552}
+  cardBack: {fileID: 21300000, guid: 3aa0dd8a60fe1d64ebdc6d0d07dcbb8c, type: 3}

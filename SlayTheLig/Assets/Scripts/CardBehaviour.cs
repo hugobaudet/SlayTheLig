@@ -1,4 +1,5 @@
 using DG.Tweening;
+using Newtonsoft.Json;
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
@@ -10,9 +11,9 @@ public class CardBehaviour : MonoBehaviour, IDragHandler, IPointerEnterHandler, 
 {
     private RectTransform draggingObject;
     private Vector3 globalMousePosition;
-    private Vector3 initialPosition;
     private Vector3 initialGlobalPosition;
-    bool isHidden;
+    bool isFaceDown;
+    bool hasBeenPlayed;
 
     [HideInInspector]
     public int cardIndex;
@@ -21,75 +22,95 @@ public class CardBehaviour : MonoBehaviour, IDragHandler, IPointerEnterHandler, 
     public Attack attack;
     
     [SerializeField]
-    Image image;
+    private Image image;
+
+    public TMP_Text cardActionPoint, cardDescription;
 
     [SerializeField]
-    public TMP_Text cardActionPoint, cardDescription;
+    private Sprite cardBack;
+
+    private Tween scaleTween, moveTween, rotateTween, mouseMoveTween;
 
     private void Awake()
     {
         draggingObject = transform as RectTransform;
-        initialPosition = transform.localPosition;
         initialGlobalPosition = transform.position;
-        isHidden = false;
-        ChangeAppearance(true);
+        isFaceDown = true;
+        image.sprite = cardBack;
+        cardActionPoint.text = "";
+        cardDescription.text = "";
+        ChangeSide(false);
+        DOTween.SetTweensCapacity(500,500);
     }
 
-    public void ChangeAppearance(bool isHidden = true)
+    public void ChangeSide(bool flipItDown)
     {
-        if (isHidden == this.isHidden) return;
-        this.isHidden = isHidden;
-        gameObject.SetActive(!isHidden);
+        if (flipItDown == isFaceDown) return;
+        isFaceDown = flipItDown;
+        StartCoroutine(ChangeSprite());
+    }
+
+    IEnumerator ChangeSprite()
+    {
+        rotateTween = transform.DORotate(Vector3.up * 90, .5f);
+        yield return rotateTween.WaitForCompletion();
+        hasBeenPlayed = isFaceDown;
+        image.sprite = isFaceDown ? cardBack : attack.cardSprite;
+        foreach (Transform item in transform)
+        {
+            item.gameObject.SetActive(!isFaceDown);
+        }
+        rotateTween = transform.DORotate(Vector3.zero, .5f);
     }
 
     public void SetNewAttack(Attack attack)
     {
         this.attack = attack;
-        image.sprite = attack.cardSprite;
         cardActionPoint.text = attack.actionCost.ToString();
         cardDescription.text = attack.attackDescription.ToString();
-        ChangeAppearance(false);
-        transform.localPosition = initialPosition;
+        ChangeSide(false);
+        transform.position = initialGlobalPosition;
     }
 
     public void OnDrag(PointerEventData eventData)
     {
+        if (hasBeenPlayed) return;
         if (RectTransformUtility.ScreenPointToWorldPointInRectangle(draggingObject, eventData.position, eventData.pressEventCamera, out globalMousePosition))
         {
-            draggingObject.position = globalMousePosition;
+            mouseMoveTween = draggingObject.DOMove(globalMousePosition, .5f);
         }
     }
 
     public void OnPointerEnter(PointerEventData eventData)
     {
-        Debug.Log("Salue");
-        transform.DOScale(Vector3.one * 1.5f, 1).SetEase(Ease.OutQuint);
-        transform.DOMoveY(initialGlobalPosition.y + 50, 1);
+        if (hasBeenPlayed) return;
+        scaleTween = transform.DOScale(Vector3.one * 1.5f, 1).SetEase(Ease.OutQuint);
+        moveTween = transform.DOMove(initialGlobalPosition + new Vector3(0, 50, 0), 1);
         transform.SetAsLastSibling();
     }
 
     public void OnPointerExit(PointerEventData eventData)
     {
-        transform.DOScale(Vector3.one, 1).SetEase(Ease.OutQuint);
-        transform.DOMoveY(initialGlobalPosition.y, 1);
+        if (hasBeenPlayed) return;
+        scaleTween = transform.DOScale(Vector3.one, 1).SetEase(Ease.OutQuint);
+        moveTween = transform.DOMove(initialGlobalPosition, 1);
     }
 
     public void OnBeginDrag(PointerEventData eventData)
     {
-
+        if (hasBeenPlayed) return;
+        moveTween.Kill();
     }
 
     public void OnEndDrag(PointerEventData eventData)
     {
-        RectTransform playerRect = FightSystem.instance.player.transform as RectTransform;
-        if (transform.localPosition.y >= playerRect.localPosition.y - (playerRect.rect.height / 2))
+        if (transform.position.y >= FightSystem.instance.uiManager.minimuHeight.position.y)
         {
             if (FightSystem.instance.PlayACard(attack, cardIndex))
             {
-                ChangeAppearance(true);
                 return;
             }
         }
-        transform.localPosition = initialPosition;
+        transform.DOMove(initialGlobalPosition, 1f).SetEase(Ease.OutQuint);
     }
 }

@@ -58,7 +58,7 @@ public class CardManager : MonoBehaviour
         if (currentHand[index] == null) return;
         currentDiscardPile.Add(currentHand[index]);
         currentHand[index] = null;
-        cardBehaviours[index].ChangeAppearance(true);
+        cardBehaviours[index].ChangeSide(true);
         FightSystem.instance.uiManager.UpdateUIPiles(currentDeck.Count, currentDiscardPile.Count);
     }
 
@@ -80,11 +80,16 @@ public class CardManager : MonoBehaviour
         }
     }
 
+    private void ReplaceCards()
+    {
+
+    }
+
     public void ResetCardsInHand()
     {
         for (int i = 0; i < cardBehaviours.Count; i++)
         {
-            cardBehaviours[i].ChangeAppearance(true);
+            cardBehaviours[i].ChangeSide(true);
         }
         for (int i = 0; i < 4; i++)
         {

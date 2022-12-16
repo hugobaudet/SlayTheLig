@@ -42,6 +42,9 @@ public class FightSystem : MonoBehaviour
         instance = this;
         player.InitializeCharacter();
         enemy.InitializeCharacter();
+        uiManager.UpdateUIArmour();
+        uiManager.UpdateUIActionPoint();
+        uiManager.UpdateUIHealthBar();
     }
 
     public PlayerBehaviour player;
@@ -73,7 +76,6 @@ public class FightSystem : MonoBehaviour
         player.StartRound();
         enemy.ChoseNextAttack();
         uiManager.UpdateUIActionPoint();
-
     }
 
     public void EndTurn()

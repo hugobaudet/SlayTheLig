@@ -1,18 +1,17 @@
 using DG.Tweening;
 using System.Collections;
 using System.Collections.Generic;
+using System.Runtime.InteropServices.WindowsRuntime;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Rendering;
 
 public enum FightStep
 {
-    AnimationEntry,
     AnimationCard,
     PlayerChoice,
     PlayerAttack,
-    CardEffect,
-    EnemyAttack,
+    EnemyTurn,
     EndFight,
 }
 
@@ -67,7 +66,6 @@ public class FightSystem : MonoBehaviour
         lastattack = null;
         cardManager.Initialize();
         StartTurn();
-        enemy.StartRound();
         uiManager.UpdateUIActionPoint();
         uiManager.UpdateUIArmour();
     }
@@ -76,10 +74,9 @@ public class FightSystem : MonoBehaviour
     {
         if (currentFightStep == FightStep.EndFight) return;
         currentFightStep = FightStep.PlayerChoice;
-        cardManager.ResetCardsInHand();
-        player.StartRound();
+        player.ReInitializeBeforeTurn();
         enemy.ChoseNextAttack();
-        uiManager.UpdateUIActionPoint();
+        cardManager.ResetCardsInHand();
     }
 
     public void EndTurn()
@@ -90,23 +87,9 @@ public class FightSystem : MonoBehaviour
 
     void StartEnemyTurn()
     {
-        if (currentFightStep == FightStep.EndFight) return;
-        enemy.StartRound();
-        currentFightStep = FightStep.EnemyAttack;
+        currentFightStep = FightStep.EnemyTurn;
+        enemy.ReInitializeBeforeTurn();
         enemy.PlayNextAttack();
-        StartTurn();
-    }
-
-    public void AnimationDone(bool playerAnimation = true)
-    {
-        if (playerAnimation)
-        {
-            currentFightStep = FightStep.PlayerChoice;
-        }
-        else
-        {
-            StartTurn();
-        }
     }
 
     public void AnimationCardDone(bool cardAnimation)
@@ -117,12 +100,15 @@ public class FightSystem : MonoBehaviour
     public bool PlayACard(Attack attack, int index, bool comboPossible = true)
     {
         if (!player.CanPlayACard(attack) || currentFightStep != FightStep.PlayerChoice) return false;
+        //Update l'UI des points d'action
         player.currentActionCost -= attack.actionCost;
         uiManager.UpdateUIActionPoint();
+
+        currentFightStep = FightStep.PlayerAttack;
+
         switch (attack.attackType)
         {
             case AttackType.SimpleAttack:
-                currentFightStep = FightStep.CardEffect;
                 enemy.TakeDamage(attack.basicDamage);
                 cardManager.RemoveCardAt(index);
                 return true;
@@ -132,7 +118,6 @@ public class FightSystem : MonoBehaviour
                     if (lastattack != null)
                     {
                         Debug.Log("COMBO");
-                        currentFightStep = FightStep.CardEffect;
                         enemy.TakeDamage(attack.comboDamage);
                         cardManager.RemoveComboPieces(attack);
                         cardManager.RemoveCardAt(index);
@@ -145,7 +130,7 @@ public class FightSystem : MonoBehaviour
                 switch (attack.noComboAttackType)
                 {
                     case AttackType.SimpleAttack:
-                        currentFightStep = FightStep.CardEffect;
+                        currentFightStep = FightStep.PlayerAttack;
                         enemy.TakeDamage(attack.basicDamage);
                         break;
                     case AttackType.Heal:
@@ -179,13 +164,15 @@ public class FightSystem : MonoBehaviour
         }
     }
 
+    //IT WORKS
     public void PlayCombo(bool combo)
     {
         currentFightStep = FightStep.PlayerChoice;
         PlayACard(lastattack.card, lastattack.number, combo);
         lastattack = null;
     }
-
+    
+    //IT WORKS
     public void WinLose(bool win)
     {
         currentFightStep = FightStep.EndFight;
@@ -196,6 +183,32 @@ public class FightSystem : MonoBehaviour
         else
         {
             Debug.Log("Partie perdue");
+        }
+    }
+
+    public void PlayerStartTurn()
+    {
+        currentFightStep = FightStep.AnimationCard;
+        enemy.ChoseNextAttack();
+        player.ReInitializeBeforeTurn();
+        //REFILL HAND (penser à mettre toutes les cartes en hasBeenPlayed pour l'anim et à ne retourner que celles qui faut)
+        //A VERIFIER
+        cardManager.ResetCardsInHand();
+    }
+
+    public void PlayNextPhase()
+    {
+        switch (currentFightStep)
+        {
+            case FightStep.AnimationCard:
+            case FightStep.PlayerAttack:
+                currentFightStep = FightStep.PlayerChoice;
+                return;
+            case FightStep.EnemyTurn:
+                //Lancer le tour du joueur
+                return;
+            default:
+                return;
         }
     }
 }

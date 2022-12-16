@@ -8,15 +8,13 @@ public class PlayerBehaviour : CharacterBehaviour
     public int maxActionCost;
 
     [HideInInspector]
-    public int currentActionCost;
+    public int currentActionCost, isTurnBuffed, isDamageBuffed, isArmourBuffed, isHealBuffed;
 
-    [HideInInspector]
-    public int isTurnBuffed, isDamageBuffed, isArmourBuffed, isHealBuffed;
-
-    public override void StartRound()
+    public override void ReInitializeBeforeTurn()
     {
-        base.StartRound();
+        base.ReInitializeBeforeTurn();
         currentActionCost = maxActionCost;
+        FightSystem.instance.uiManager.UpdateUIActionPoint();
         isTurnBuffed = 1;
         isHealBuffed = 1;
         isDamageBuffed = 1;

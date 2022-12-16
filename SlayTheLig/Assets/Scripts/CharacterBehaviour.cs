@@ -7,13 +7,12 @@ using UnityEngine.UI;
 
 public class CharacterBehaviour : MonoBehaviour
 {
-    public int maxHP;
-    public int knockBackForce;
+    public int maxHP, knockBackForce;
 
     [HideInInspector]
     public int currentHP, armourAmount;
     protected bool isAlive;
-    protected Vector3 position;
+    protected Vector3 initialPosition;
     protected Image sprite;
 
     protected Tween knockBackTween;
@@ -25,11 +24,11 @@ public class CharacterBehaviour : MonoBehaviour
         isAlive = true;
         currentHP = maxHP;
         armourAmount = 0;
-        position = transform.position;
+        initialPosition = transform.position;
         sprite = GetComponent<Image>();
     }
 
-    public virtual void StartRound()
+    public virtual void ReInitializeBeforeTurn()
     {
         armourAmount = 0;
         FightSystem.instance.uiManager.UpdateUIArmour();
@@ -37,7 +36,7 @@ public class CharacterBehaviour : MonoBehaviour
 
     public virtual void TakeDamage(int damage, int direction = -1)
     {
-        position= transform.position;
+        initialPosition = transform.position;
         int tmpDamage = damage;
         damage -= armourAmount;
         armourAmount -= Mathf.Clamp(tmpDamage, 0, armourAmount);
@@ -50,11 +49,13 @@ public class CharacterBehaviour : MonoBehaviour
 
     IEnumerator KnockBack(int direction)
     {
-        knockBackTween = transform.DOMove(position + Vector3.right * direction * knockBackForce,.2f).SetEase(Ease.OutExpo);
+        knockBackTween = transform.DOMove(initialPosition + Vector3.right * direction * knockBackForce,.2f).SetEase(Ease.OutExpo);
+        sprite.color = Color.red;
         yield return knockBackTween.WaitForCompletion();
-        knockBackTween = transform.DOMove(position,.3f);
+        knockBackTween = transform.DOMove(initialPosition,.3f);
+        sprite.color = Color.white;
         yield return knockBackTween.WaitForCompletion();
-        FightSystem.instance.AnimationDone(direction < 0);
+        FightSystem.instance.PlayNextPhase();
     }
 
     protected virtual void CheckDeath()

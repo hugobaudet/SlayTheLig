@@ -10,10 +10,8 @@ using UnityEngine.UI;
 public class CardBehaviour : MonoBehaviour, IDragHandler, IPointerEnterHandler, IPointerExitHandler , IBeginDragHandler, IEndDragHandler
 {
     private RectTransform draggingObject;
-    private Vector3 globalMousePosition;
-    private Vector3 initialGlobalPosition;
-    bool isFaceDown;
-    bool hasBeenPlayed;
+    private Vector3 globalMousePosition, initialGlobalPosition;
+    bool isFaceDown, hasBeenPlayed;
 
     [HideInInspector]
     public int cardIndex;
@@ -35,13 +33,12 @@ public class CardBehaviour : MonoBehaviour, IDragHandler, IPointerEnterHandler, 
     {
         draggingObject = transform as RectTransform;
         initialGlobalPosition = FightSystem.instance.uiManager.cardPlacement.position;
-        isFaceDown = true;
+        isFaceDown = false;
         image.sprite = cardBack;
         foreach (Transform item in transform)
         {
             item.gameObject.SetActive(false);
         }
-        ChangeSide(false);
     }
 
     public void SetInitialPosition(float positionX)
@@ -69,7 +66,7 @@ public class CardBehaviour : MonoBehaviour, IDragHandler, IPointerEnterHandler, 
         }
         rotateTween = transform.DORotate(Vector3.zero, .5f);
     }
-
+            
     public void SetNewAttack(Attack attack)
     {
         this.attack = attack;
@@ -81,7 +78,11 @@ public class CardBehaviour : MonoBehaviour, IDragHandler, IPointerEnterHandler, 
 
     public void OnDrag(PointerEventData eventData)
     {
-        if (hasBeenPlayed) return;
+        if (hasBeenPlayed)
+        {
+            OnPointerExit(eventData);
+            return;
+        }
         if (RectTransformUtility.ScreenPointToWorldPointInRectangle(draggingObject, eventData.position, eventData.pressEventCamera, out globalMousePosition))
         {
             mouseMoveTween = draggingObject.DOMove(globalMousePosition, .5f);
@@ -90,7 +91,11 @@ public class CardBehaviour : MonoBehaviour, IDragHandler, IPointerEnterHandler, 
 
     public void OnPointerEnter(PointerEventData eventData)
     {
-        if (hasBeenPlayed) return;
+        if (hasBeenPlayed)
+        {
+            OnPointerExit(eventData);
+            return;
+        }
         scaleTween = transform.DOScale(Vector3.one * 1.5f, 1).SetEase(Ease.OutQuint);
         moveTween = transform.DOMove(initialGlobalPosition + new Vector3(0, 50, 0), 1);
         transform.SetAsLastSibling();
@@ -98,7 +103,6 @@ public class CardBehaviour : MonoBehaviour, IDragHandler, IPointerEnterHandler, 
 
     public void OnPointerExit(PointerEventData eventData)
     {
-        if (hasBeenPlayed) return;
         scaleTween = transform.DOScale(Vector3.one, 1).SetEase(Ease.OutQuint);
         moveTween = transform.DOMove(initialGlobalPosition, 1);
     }

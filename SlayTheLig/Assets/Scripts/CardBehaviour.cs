@@ -31,16 +31,23 @@ public class CardBehaviour : MonoBehaviour, IDragHandler, IPointerEnterHandler, 
 
     private Tween scaleTween, moveTween, rotateTween, mouseMoveTween;
 
-    private void Awake()
+    public void Initialize()
     {
         draggingObject = transform as RectTransform;
-        initialGlobalPosition = transform.position;
+        initialGlobalPosition = FightSystem.instance.uiManager.cardPlacement.position;
         isFaceDown = true;
         image.sprite = cardBack;
-        cardActionPoint.text = "";
-        cardDescription.text = "";
+        foreach (Transform item in transform)
+        {
+            item.gameObject.SetActive(false);
+        }
         ChangeSide(false);
-        DOTween.SetTweensCapacity(500,500);
+    }
+
+    public void SetInitialPosition(float positionX)
+    {
+        initialGlobalPosition.x = positionX;
+        transform.DOMove(initialGlobalPosition, 1f);
     }
 
     public void ChangeSide(bool flipItDown)
@@ -104,7 +111,7 @@ public class CardBehaviour : MonoBehaviour, IDragHandler, IPointerEnterHandler, 
 
     public void OnEndDrag(PointerEventData eventData)
     {
-        if (transform.position.y >= FightSystem.instance.uiManager.minimuHeight.position.y)
+        if (globalMousePosition.y >= FightSystem.instance.uiManager.minimuHeight.position.y)
         {
             if (FightSystem.instance.PlayACard(attack, cardIndex))
             {

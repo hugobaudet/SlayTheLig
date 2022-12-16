@@ -1,3 +1,4 @@
+using DG.Tweening;
 using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
@@ -40,6 +41,8 @@ public class FightSystem : MonoBehaviour
             return;
         }
         instance = this;
+
+        DOTween.SetTweensCapacity(500, 500);
         player.InitializeCharacter();
         enemy.InitializeCharacter();
         uiManager.UpdateUIArmour();
@@ -71,6 +74,7 @@ public class FightSystem : MonoBehaviour
 
     void StartTurn()
     {
+        if (currentFightStep == FightStep.EndFight) return;
         currentFightStep = FightStep.PlayerChoice;
         cardManager.ResetCardsInHand();
         player.StartRound();
@@ -86,10 +90,28 @@ public class FightSystem : MonoBehaviour
 
     void StartEnemyTurn()
     {
+        if (currentFightStep == FightStep.EndFight) return;
         enemy.StartRound();
         currentFightStep = FightStep.EnemyAttack;
         enemy.PlayNextAttack();
         StartTurn();
+    }
+
+    public void AnimationDone(bool playerAnimation = true)
+    {
+        if (playerAnimation)
+        {
+            currentFightStep = FightStep.PlayerChoice;
+        }
+        else
+        {
+            StartTurn();
+        }
+    }
+
+    public void AnimationCardDone(bool cardAnimation)
+    {
+        currentFightStep = cardAnimation ? FightStep.PlayerChoice : FightStep.AnimationCard;
     }
 
     public bool PlayACard(Attack attack, int index, bool comboPossible = true)
@@ -100,6 +122,7 @@ public class FightSystem : MonoBehaviour
         switch (attack.attackType)
         {
             case AttackType.SimpleAttack:
+                currentFightStep = FightStep.CardEffect;
                 enemy.TakeDamage(attack.basicDamage);
                 cardManager.RemoveCardAt(index);
                 return true;
@@ -109,12 +132,12 @@ public class FightSystem : MonoBehaviour
                     if (lastattack != null)
                     {
                         Debug.Log("COMBO");
+                        currentFightStep = FightStep.CardEffect;
                         enemy.TakeDamage(attack.comboDamage);
                         cardManager.RemoveComboPieces(attack);
                         cardManager.RemoveCardAt(index);
                         return true;
                     }
-                    currentFightStep = FightStep.CardEffect;
                     lastattack = new Card(attack, index);
                     uiManager.DisplayUICombo();
                     return false;
@@ -122,6 +145,7 @@ public class FightSystem : MonoBehaviour
                 switch (attack.noComboAttackType)
                 {
                     case AttackType.SimpleAttack:
+                        currentFightStep = FightStep.CardEffect;
                         enemy.TakeDamage(attack.basicDamage);
                         break;
                     case AttackType.Heal:

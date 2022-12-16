@@ -22,7 +22,7 @@ public class UIManager : MonoBehaviour
     [SerializeField]
     private GameObject uiCombo;
 
-    public Transform minimuHeight;
+    public Transform minimuHeight, cardPlacement;
 
     public void UpdateUIActionPoint()
     {

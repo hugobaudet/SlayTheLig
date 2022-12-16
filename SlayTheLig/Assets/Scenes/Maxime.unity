@@ -218,6 +218,7 @@ MonoBehaviour:
   nbHPEnemy: {fileID: 915227873}
   uiCombo: {fileID: 1840257263}
   minimuHeight: {fileID: 1659233396}
+  cardPlacement: {fileID: 358584480}
 --- !u!114 &23273259
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -811,8 +812,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: -384.31}
-  m_SizeDelta: {x: 1080, y: 312}
+  m_AnchoredPosition: {x: 0, y: -375}
+  m_SizeDelta: {x: 880, y: 311.5}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &381526859
 GameObject:
@@ -2662,6 +2663,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   maxHP: 50
+  knockBackForce: 50
   currentHP: 0
   armourAmount: 0
   phaseColors:
@@ -3627,6 +3629,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   maxHP: 100
+  knockBackForce: 25
   currentHP: 0
   armourAmount: 0
   phaseColors:

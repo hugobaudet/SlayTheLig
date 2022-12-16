@@ -10,8 +10,17 @@ public class CardManager : MonoBehaviour
  
     public List<CardBehaviour> cardBehaviours;
 
+    private float cardWidth;
+    private Transform cardPlacement;
+
     public void Initialize()
     {
+        cardWidth = 220f;
+        foreach (CardBehaviour item in cardBehaviours)
+        {
+            item.Initialize();
+        }
+        cardPlacement = FightSystem.instance.uiManager.cardPlacement;
         currentDeck.Clear();
         currentHand.Clear();
         currentDiscardPile.Clear();
@@ -31,6 +40,7 @@ public class CardManager : MonoBehaviour
         {
             cardBehaviours[i].cardIndex = i;
         }
+        ReplaceCards();
     }
 
     public bool IsComboPossible(Attack attackCombo)
@@ -60,6 +70,7 @@ public class CardManager : MonoBehaviour
         currentHand[index] = null;
         cardBehaviours[index].ChangeSide(true);
         FightSystem.instance.uiManager.UpdateUIPiles(currentDeck.Count, currentDiscardPile.Count);
+        ReplaceCards();
     }
 
     public void RemoveComboPieces(Attack attack)
@@ -79,17 +90,25 @@ public class CardManager : MonoBehaviour
             }
         }
     }
-
+    
     private void ReplaceCards()
     {
-
+        List<CardBehaviour> cards = cardBehaviours.FindAll(x => x.attack != null);
+        if (cards.Count == 0) return;
+        for (int i = 0; i < cards.Count; i++)
+        {
+            cards[i].SetInitialPosition(cardPlacement.position.x + (cardWidth * i) - ((cardWidth/2f) * (cards.Count -1)));
+        }
     }
 
     public void ResetCardsInHand()
     {
         for (int i = 0; i < cardBehaviours.Count; i++)
         {
-            cardBehaviours[i].ChangeSide(true);
+            if (cardBehaviours[i].attack == null)
+            {
+                cardBehaviours[i].ChangeSide(true);
+            }
         }
         for (int i = 0; i < 4; i++)
         {

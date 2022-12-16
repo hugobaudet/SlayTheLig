@@ -64,10 +64,10 @@ public class EnemyBehaviour : CharacterBehaviour
         nextAttack = possibleAttacks[Random.Range(0, possibleAttacks.Count)];
     }
 
-    public override void TakeDamage(int damage)
+    public override void TakeDamage(int damage, int direction = -1)
     {
         damage *= FightSystem.instance.player.isTurnBuffed * FightSystem.instance.player.isDamageBuffed;
-        base.TakeDamage(damage);
+        base.TakeDamage(damage, 1);
     }
 
     public void PlayNextAttack()

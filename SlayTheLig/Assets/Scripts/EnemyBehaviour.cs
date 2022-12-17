@@ -56,19 +56,23 @@ public class EnemyBehaviour : CharacterBehaviour
         List<EnemyAttack> possibleAttacks = enemyAttacks.FindAll(x => x.phase == currentPhase);
         if (currentHP == maxHP)
         {
-            possibleAttacks.Remove(enemyAttacks.Find(x => x.type == EnemyAttacksType.Heal));
+            foreach (EnemyAttack item in enemyAttacks.FindAll(x => x.type == EnemyAttacksType.Heal))
+            {
+                possibleAttacks.Remove(item);
+            }
         }
         nextAttack = possibleAttacks[Random.Range(0, possibleAttacks.Count)];
     }
 
-    public override void TakeDamage(int damage)
+    public override void TakeDamage(int damage, int direction = -1)
     {
         damage *= FightSystem.instance.player.isTurnBuffed * FightSystem.instance.player.isDamageBuffed;
-        base.TakeDamage(damage);
+        base.TakeDamage(damage, 1);
     }
 
     public void PlayNextAttack()
     {
+        Debug.Log(nextAttack.type);
         switch (nextAttack.type)
         {
             case EnemyAttacksType.SimpleAttack:

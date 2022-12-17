@@ -1,17 +1,18 @@
+using DG.Tweening;
 using System.Collections;
 using System.Collections.Generic;
+using System.Runtime.InteropServices.WindowsRuntime;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Rendering;
 
 public enum FightStep
 {
-    AnimationEntry,
     AnimationCard,
     PlayerChoice,
+    PlayerComboChoice,
     PlayerAttack,
-    CardEffect,
-    EnemyAttack,
+    EnemyTurn,
     EndFight,
 }
 
@@ -20,6 +21,12 @@ public class Card
 {
     public Attack card;
     public int number;
+
+    public Card(Attack attack, int value)
+    {
+        this.card = attack;
+        this.number = value;
+    }
 }
 
 public class FightSystem : MonoBehaviour
@@ -34,8 +41,13 @@ public class FightSystem : MonoBehaviour
             return;
         }
         instance = this;
+
+        DOTween.SetTweensCapacity(500, 500);
         player.InitializeCharacter();
         enemy.InitializeCharacter();
+        uiManager.UpdateUIArmour();
+        uiManager.UpdateUIActionPoint();
+        uiManager.UpdateUIHealthBar();
     }
 
     public PlayerBehaviour player;
@@ -48,26 +60,33 @@ public class FightSystem : MonoBehaviour
 
     public List<Card> deck;
 
+    private Card lastattack;
+
     private void Start()
     {
+        lastattack = null;
         cardManager.Initialize();
-        StartTurn();
-        enemy.StartRound();
+        StartPlayerTurn();
         uiManager.UpdateUIActionPoint();
         uiManager.UpdateUIArmour();
     }
 
-    void StartTurn()
+    void StartPlayerTurn()
     {
-        currentFightStep = FightStep.PlayerChoice;
-        cardManager.ResetCardsInHand();
-        player.StartRound();
+        if (currentFightStep == FightStep.EndFight) return;
+        currentFightStep = FightStep.AnimationCard;
         enemy.ChoseNextAttack();
-        uiManager.UpdateUIActionPoint();
-
+        player.ReInitializeBeforeTurn();
+        cardManager.ResetCardsInHand();
     }
 
-    public void EndTurn()
+    public void StartPlayerChoice()
+    {
+        if (currentFightStep != FightStep.AnimationCard) return;
+        PlayNextPhase();
+    }
+
+    public void EndPlayerTurn()
     {
         if (currentFightStep != FightStep.PlayerChoice) return;
         StartEnemyTurn();
@@ -75,18 +94,22 @@ public class FightSystem : MonoBehaviour
 
     void StartEnemyTurn()
     {
-        enemy.StartRound();
-        currentFightStep = FightStep.EnemyAttack;
+        currentFightStep = FightStep.EnemyTurn;
+        enemy.ReInitializeBeforeTurn();
         enemy.PlayNextAttack();
-        StartTurn();
     }
 
-    public bool PlayACard(Attack attack, int index)
+    public void AnimationCardDone(bool cardAnimation)
+    {
+        currentFightStep = cardAnimation ? FightStep.PlayerChoice : FightStep.AnimationCard;
+    }
+
+    public bool PlayACard(Attack attack, int index, bool comboPossible = true)
     {
         if (!player.CanPlayACard(attack) || currentFightStep != FightStep.PlayerChoice) return false;
-        //currentFightStep = FightStep.CardEffect;
         player.currentActionCost -= attack.actionCost;
         uiManager.UpdateUIActionPoint();
+        currentFightStep = FightStep.PlayerAttack;
         switch (attack.attackType)
         {
             case AttackType.SimpleAttack:
@@ -94,16 +117,19 @@ public class FightSystem : MonoBehaviour
                 cardManager.RemoveCardAt(index);
                 return true;
             case AttackType.ComboAttack:
-                if (cardManager.IsComboPossible(attack))
+                if (cardManager.IsComboPossible(attack) && comboPossible)
                 {
-                    if (true)
+                    if (lastattack != null)
                     {
-                        Debug.Log("COMBO");
                         enemy.TakeDamage(attack.comboDamage);
-                        cardManager.RemoveCardAt(index);
                         cardManager.RemoveComboPieces(attack);
+                        cardManager.RemoveCardAt(index);
                         return true;
                     }
+                    currentFightStep = FightStep.PlayerComboChoice;
+                    lastattack = new Card(attack, index);
+                    uiManager.DisplayUICombo();
+                    return false;
                 }
                 switch (attack.noComboAttackType)
                 {
@@ -141,6 +167,15 @@ public class FightSystem : MonoBehaviour
         }
     }
 
+    //IT WORKS
+    public void PlayCombo(bool combo)
+    {
+        currentFightStep = FightStep.PlayerChoice;
+        PlayACard(lastattack.card, lastattack.number, combo);
+        lastattack = null;
+    }
+    
+    //IT WORKS
     public void WinLose(bool win)
     {
         currentFightStep = FightStep.EndFight;
@@ -151,6 +186,22 @@ public class FightSystem : MonoBehaviour
         else
         {
             Debug.Log("Partie perdue");
+        }
+    }
+
+    public void PlayNextPhase()
+    {
+        switch (currentFightStep)
+        {
+            case FightStep.AnimationCard:
+            case FightStep.PlayerAttack:
+                currentFightStep = FightStep.PlayerChoice;
+                return;
+            case FightStep.EnemyTurn:
+                StartPlayerTurn();
+                return;
+            default:
+                return;
         }
     }
 }

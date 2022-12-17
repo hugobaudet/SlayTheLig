@@ -1,15 +1,21 @@
+using DG.Tweening;
+using Mono.Cecil.Cil;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class CharacterBehaviour : MonoBehaviour
 {
-    [SerializeField]
-    public int maxHP;
+    public int maxHP, knockBackForce;
 
     [HideInInspector]
     public int currentHP, armourAmount;
     protected bool isAlive;
+    protected Vector3 initialPosition;
+    protected Image sprite;
+
+    protected Tween knockBackTween;
 
     public Gradient phaseColors;
 
@@ -18,54 +24,63 @@ public class CharacterBehaviour : MonoBehaviour
         isAlive = true;
         currentHP = maxHP;
         armourAmount = 0;
+        initialPosition = transform.position;
+        sprite = GetComponent<Image>();
     }
 
-    public virtual void StartRound()
+    public virtual void ReInitializeBeforeTurn()
     {
         armourAmount = 0;
         FightSystem.instance.uiManager.UpdateUIArmour();
     }
 
-    public virtual void TakeDamage(int damage)
+    public virtual void TakeDamage(int damage, int direction = -1)
     {
+        initialPosition = transform.position;
+        int tmpDamage = damage;
         damage -= armourAmount;
-        if (damage > 0)
-        {
-            armourAmount = 0;
-        }
-        else
-        {
-            armourAmount -= damage;
-        }
-        FightSystem.instance.uiManager.UpdateUIArmour();
+        armourAmount -= Mathf.Clamp(tmpDamage, 0, armourAmount);
         currentHP -= Mathf.Clamp(damage, 0, currentHP);
-        Debug.Log(name + " a pris " + Mathf.Clamp(damage, 0, currentHP) + " damages, il lui reste " + currentHP + "HPs.");
+        StartCoroutine(KnockBack(direction));
         CheckDeath();
+        FightSystem.instance.uiManager.UpdateUIArmour();
         FightSystem.instance.uiManager.UpdateUIHealthBar();
+    }
+
+    IEnumerator KnockBack(int direction)
+    {
+        knockBackTween = transform.DOMove(initialPosition + Vector3.right * direction * knockBackForce,.2f).SetEase(Ease.OutExpo);
+        sprite.color = Color.red;
+        yield return knockBackTween.WaitForCompletion();
+        knockBackTween = transform.DOMove(initialPosition,.3f);
+        sprite.color = Color.white;
+        yield return knockBackTween.WaitForCompletion();
+        FightSystem.instance.PlayNextPhase();
     }
 
     protected virtual void CheckDeath()
     {
         if (currentHP <= 0)
         {
-            Debug.Log(name + " est mort!");
             isAlive = false;
             currentHP = 0;
             FightSystem.instance.WinLose(false);
+            sprite.DOFade(0, 1);
+            knockBackTween.Kill();
         }
     }
 
     public virtual void AddArmour(int armourAmount)
     {
         this.armourAmount += armourAmount;
-        Debug.Log(name + " a gagné " + armourAmount + " d'armures, il possède " + this.armourAmount + " armures.");
         FightSystem.instance.uiManager.UpdateUIArmour();
+        FightSystem.instance.PlayNextPhase();
     }
 
     public virtual void HealCharacter(int healAmount)
     {
         currentHP += Mathf.Clamp(healAmount, 0, maxHP - currentHP);
-        Debug.Log(name + " a récupéré " + healAmount + " HPs, il possède désormais " + currentHP + "HPs.");
         FightSystem.instance.uiManager.UpdateUIHealthBar();
+        FightSystem.instance.PlayNextPhase();
     }
 }

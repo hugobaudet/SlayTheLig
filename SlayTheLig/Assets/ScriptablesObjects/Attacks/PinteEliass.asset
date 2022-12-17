@@ -17,9 +17,9 @@ MonoBehaviour:
   cardSprite: {fileID: 21300000, guid: 284ffb42b4f45b74c8401decc58d057e, type: 3}
   actionCost: 1
   attackType: 1
-  noComboAttackType: 4
+  noComboAttackType: 0
   noComboBuffAttackType: 0
-  basicDamage: 0
+  basicDamage: 10
   comboDamage: 30
   basicHeal: 0
   basicDefense: 10

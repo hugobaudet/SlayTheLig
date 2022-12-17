@@ -72,6 +72,7 @@ public class EnemyBehaviour : CharacterBehaviour
 
     public void PlayNextAttack()
     {
+        Debug.Log(nextAttack.type);
         switch (nextAttack.type)
         {
             case EnemyAttacksType.SimpleAttack:

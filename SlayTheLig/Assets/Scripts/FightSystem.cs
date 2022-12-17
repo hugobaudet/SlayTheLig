@@ -10,6 +10,7 @@ public enum FightStep
 {
     AnimationCard,
     PlayerChoice,
+    PlayerComboChoice,
     PlayerAttack,
     EnemyTurn,
     EndFight,
@@ -65,21 +66,27 @@ public class FightSystem : MonoBehaviour
     {
         lastattack = null;
         cardManager.Initialize();
-        StartTurn();
+        StartPlayerTurn();
         uiManager.UpdateUIActionPoint();
         uiManager.UpdateUIArmour();
     }
 
-    void StartTurn()
+    void StartPlayerTurn()
     {
         if (currentFightStep == FightStep.EndFight) return;
-        currentFightStep = FightStep.PlayerChoice;
-        player.ReInitializeBeforeTurn();
+        currentFightStep = FightStep.AnimationCard;
         enemy.ChoseNextAttack();
+        player.ReInitializeBeforeTurn();
         cardManager.ResetCardsInHand();
     }
 
-    public void EndTurn()
+    public void StartPlayerChoice()
+    {
+        if (currentFightStep != FightStep.AnimationCard) return;
+        PlayNextPhase();
+    }
+
+    public void EndPlayerTurn()
     {
         if (currentFightStep != FightStep.PlayerChoice) return;
         StartEnemyTurn();
@@ -100,12 +107,9 @@ public class FightSystem : MonoBehaviour
     public bool PlayACard(Attack attack, int index, bool comboPossible = true)
     {
         if (!player.CanPlayACard(attack) || currentFightStep != FightStep.PlayerChoice) return false;
-        //Update l'UI des points d'action
         player.currentActionCost -= attack.actionCost;
         uiManager.UpdateUIActionPoint();
-
         currentFightStep = FightStep.PlayerAttack;
-
         switch (attack.attackType)
         {
             case AttackType.SimpleAttack:
@@ -117,12 +121,12 @@ public class FightSystem : MonoBehaviour
                 {
                     if (lastattack != null)
                     {
-                        Debug.Log("COMBO");
                         enemy.TakeDamage(attack.comboDamage);
                         cardManager.RemoveComboPieces(attack);
                         cardManager.RemoveCardAt(index);
                         return true;
                     }
+                    currentFightStep = FightStep.PlayerComboChoice;
                     lastattack = new Card(attack, index);
                     uiManager.DisplayUICombo();
                     return false;
@@ -130,7 +134,6 @@ public class FightSystem : MonoBehaviour
                 switch (attack.noComboAttackType)
                 {
                     case AttackType.SimpleAttack:
-                        currentFightStep = FightStep.PlayerAttack;
                         enemy.TakeDamage(attack.basicDamage);
                         break;
                     case AttackType.Heal:
@@ -186,16 +189,6 @@ public class FightSystem : MonoBehaviour
         }
     }
 
-    public void PlayerStartTurn()
-    {
-        currentFightStep = FightStep.AnimationCard;
-        enemy.ChoseNextAttack();
-        player.ReInitializeBeforeTurn();
-        //REFILL HAND (penser à mettre toutes les cartes en hasBeenPlayed pour l'anim et à ne retourner que celles qui faut)
-        //A VERIFIER
-        cardManager.ResetCardsInHand();
-    }
-
     public void PlayNextPhase()
     {
         switch (currentFightStep)
@@ -205,7 +198,7 @@ public class FightSystem : MonoBehaviour
                 currentFightStep = FightStep.PlayerChoice;
                 return;
             case FightStep.EnemyTurn:
-                //Lancer le tour du joueur
+                StartPlayerTurn();
                 return;
             default:
                 return;

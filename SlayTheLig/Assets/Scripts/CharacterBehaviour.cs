@@ -74,11 +74,13 @@ public class CharacterBehaviour : MonoBehaviour
     {
         this.armourAmount += armourAmount;
         FightSystem.instance.uiManager.UpdateUIArmour();
+        FightSystem.instance.PlayNextPhase();
     }
 
     public virtual void HealCharacter(int healAmount)
     {
         currentHP += Mathf.Clamp(healAmount, 0, maxHP - currentHP);
         FightSystem.instance.uiManager.UpdateUIHealthBar();
+        FightSystem.instance.PlayNextPhase();
     }
 }

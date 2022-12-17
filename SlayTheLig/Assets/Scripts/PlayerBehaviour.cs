@@ -46,6 +46,7 @@ public class PlayerBehaviour : CharacterBehaviour
             default:
                 break;
         }
+        FightSystem.instance.PlayNextPhase();
     }
 
     public override void HealCharacter(int healAmount)

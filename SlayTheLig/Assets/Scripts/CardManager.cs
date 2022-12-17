@@ -35,14 +35,13 @@ public class CardManager : MonoBehaviour
         {
             currentHand.Add(null);
         }
-        //ResetCardsInHand();
         for (int i = 0; i < cardBehaviours.Count; i++)
         {
             cardBehaviours[i].cardIndex = i;
         }
-        //ReplaceCards();
     }
 
+    //IT WORKS
     public bool IsComboPossible(Attack attackCombo)
     {
         List<Attack> copyHand = new List<Attack>(currentHand);
@@ -73,6 +72,7 @@ public class CardManager : MonoBehaviour
         ReplaceCards();
     }
 
+    //IT WORKS
     public void RemoveComboPieces(Attack attack)
     {
         for (int i = 0; i < attack.comboPieces.Count; i++)
@@ -91,6 +91,7 @@ public class CardManager : MonoBehaviour
         }
     }
     
+    //IT MIGHT WORK
     private void ReplaceCards()
     {
         List<CardBehaviour> cards = cardBehaviours.FindAll(x => x.attack != null);
@@ -103,14 +104,7 @@ public class CardManager : MonoBehaviour
 
     public void ResetCardsInHand()
     {
-        for (int i = 0; i < cardBehaviours.Count; i++)
-        {
-            if (cardBehaviours[i].attack == null)
-            {
-                cardBehaviours[i].ChangeSide(false);
-            }
-        }
-        for (int i = 0; i < 4; i++)
+        for (int i = 0; i < currentHand.Count; i++)
         {
             if (currentHand[i] == null)
             {
@@ -135,7 +129,6 @@ public class CardManager : MonoBehaviour
         }
         for (int i = 0; i < currentHand.Count; i++)
         {
-            Debug.Log("Carte changée : " + i);
             cardBehaviours[i].SetNewAttack(currentHand[i]);
         }
         FightSystem.instance.uiManager.UpdateUIPiles(currentDeck.Count, currentDiscardPile.Count);

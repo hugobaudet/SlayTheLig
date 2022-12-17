@@ -3837,7 +3837,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 23273257}
         m_TargetAssemblyTypeName: FightSystem, Assembly-CSharp
-        m_MethodName: EndTurn
+        m_MethodName: EndPlayerTurn
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}

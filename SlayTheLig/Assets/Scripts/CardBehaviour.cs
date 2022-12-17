@@ -11,7 +11,8 @@ public class CardBehaviour : MonoBehaviour, IDragHandler, IPointerEnterHandler, 
 {
     private RectTransform draggingObject;
     private Vector3 globalMousePosition, initialGlobalPosition;
-    bool isFaceDown, hasBeenPlayed;
+    [HideInInspector]
+    public bool isFaceDown, isInAnimation, isBeingDrag;
 
     [HideInInspector]
     public int cardIndex;
@@ -29,12 +30,15 @@ public class CardBehaviour : MonoBehaviour, IDragHandler, IPointerEnterHandler, 
 
     private Tween scaleTween, moveTween, rotateTween, mouseMoveTween;
 
+    //IT WORKS
     public void Initialize()
     {
         draggingObject = transform as RectTransform;
-        initialGlobalPosition = FightSystem.instance.uiManager.cardPlacement.position;
-        isFaceDown = false;
+        isFaceDown = true;
+        isFaceDown = true;
+        isInAnimation = false;
         image.sprite = cardBack;
+        initialGlobalPosition = transform.position;
         foreach (Transform item in transform)
         {
             item.gameObject.SetActive(false);
@@ -56,19 +60,26 @@ public class CardBehaviour : MonoBehaviour, IDragHandler, IPointerEnterHandler, 
 
     IEnumerator ChangeSprite()
     {
+        isInAnimation = true;
         rotateTween = transform.DORotate(Vector3.up * 90, .5f);
         yield return rotateTween.WaitForCompletion();
-        hasBeenPlayed = isFaceDown;
         image.sprite = isFaceDown ? cardBack : attack.cardSprite;
         foreach (Transform item in transform)
         {
             item.gameObject.SetActive(!isFaceDown);
         }
         rotateTween = transform.DORotate(Vector3.zero, .5f);
+        yield return rotateTween.WaitForCompletion();
+        isInAnimation = true;
+        if (!isFaceDown)
+        {
+            FightSystem.instance.StartPlayerChoice();
+        }
     }
             
     public void SetNewAttack(Attack attack)
     {
+        if (attack == null) return;
         this.attack = attack;
         cardActionPoint.text = attack.actionCost.ToString();
         cardDescription.text = attack.attackDescription.ToString();
@@ -78,7 +89,7 @@ public class CardBehaviour : MonoBehaviour, IDragHandler, IPointerEnterHandler, 
 
     public void OnDrag(PointerEventData eventData)
     {
-        if (hasBeenPlayed)
+        if (isFaceDown)
         {
             OnPointerExit(eventData);
             return;
@@ -91,11 +102,12 @@ public class CardBehaviour : MonoBehaviour, IDragHandler, IPointerEnterHandler, 
 
     public void OnPointerEnter(PointerEventData eventData)
     {
-        if (hasBeenPlayed)
+        if (isFaceDown)
         {
             OnPointerExit(eventData);
             return;
         }
+        if (isBeingDrag) return;
         scaleTween = transform.DOScale(Vector3.one * 1.5f, 1).SetEase(Ease.OutQuint);
         moveTween = transform.DOMove(initialGlobalPosition + new Vector3(0, 50, 0), 1);
         transform.SetAsLastSibling();
@@ -103,18 +115,21 @@ public class CardBehaviour : MonoBehaviour, IDragHandler, IPointerEnterHandler, 
 
     public void OnPointerExit(PointerEventData eventData)
     {
+        if (isBeingDrag) return;
         scaleTween = transform.DOScale(Vector3.one, 1).SetEase(Ease.OutQuint);
         moveTween = transform.DOMove(initialGlobalPosition, 1);
     }
 
     public void OnBeginDrag(PointerEventData eventData)
     {
-        if (hasBeenPlayed) return;
+        if (isFaceDown) return;
+        isBeingDrag = true;
         moveTween.Kill();
     }
 
     public void OnEndDrag(PointerEventData eventData)
     {
+        isBeingDrag = false;
         if (globalMousePosition.y >= FightSystem.instance.uiManager.minimuHeight.position.y)
         {
             if (FightSystem.instance.PlayACard(attack, cardIndex))

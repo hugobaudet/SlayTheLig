@@ -4516,9 +4516,9 @@ MonoBehaviour:
   - phase: 1
     sprite: {fileID: 21300000, guid: 80499ca10f7bf1747912925e4dfc880e, type: 3}
   - phase: 2
-    sprite: {fileID: 21300000, guid: 80499ca10f7bf1747912925e4dfc880e, type: 3}
+    sprite: {fileID: 21300000, guid: 9e102af9dbab9f342a27487427a4482a, type: 3}
   - phase: 3
-    sprite: {fileID: 21300000, guid: 80499ca10f7bf1747912925e4dfc880e, type: 3}
+    sprite: {fileID: 21300000, guid: 50a675689e3630541a11a07c43b7a629, type: 3}
 --- !u!224 &2099149360
 RectTransform:
   m_ObjectHideFlags: 0

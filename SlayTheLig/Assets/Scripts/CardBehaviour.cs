@@ -11,7 +11,7 @@ public class CardBehaviour : MonoBehaviour, IDragHandler, IPointerEnterHandler, 
 {
     private RectTransform draggingObject;
     private Vector3 globalMousePosition, initialGlobalPosition;
-    private bool isFaceDown, isBeingDrag;
+    private bool isFaceDown, isInAnimation, isBeingDrag;
 
     [SerializeField] private bool updateCardName;
 
@@ -38,6 +38,7 @@ public class CardBehaviour : MonoBehaviour, IDragHandler, IPointerEnterHandler, 
         draggingObject = transform as RectTransform;
         isFaceDown = true;
         isFaceDown = true;
+        isInAnimation = false;
         image.sprite = cardBack;
         initialGlobalPosition = transform.position;
         cardName.gameObject.SetActive(updateCardName);
@@ -62,6 +63,7 @@ public class CardBehaviour : MonoBehaviour, IDragHandler, IPointerEnterHandler, 
 
     IEnumerator ChangeSprite()
     {
+        isInAnimation = true;
         rotateTween = transform.DORotate(Vector3.up * 90, .5f);
         yield return rotateTween.WaitForCompletion();
         image.sprite = isFaceDown ? cardBack : attack.cardSprite;
@@ -71,6 +73,7 @@ public class CardBehaviour : MonoBehaviour, IDragHandler, IPointerEnterHandler, 
         }
         rotateTween = transform.DORotate(Vector3.zero, .5f);
         yield return rotateTween.WaitForCompletion();
+        isInAnimation = false;
         if (!isFaceDown)
         {
             FightSystem.instance.StartPlayerChoice();

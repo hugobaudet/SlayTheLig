@@ -13,8 +13,7 @@ MonoBehaviour:
   m_Name: AntoineManager
   m_EditorClassIdentifier: 
   cardName: Manager Antoine
-  attackDescription: "Un beau goss \xE0 l'\xE9tat pur. Multiplie les effets des heal
-    par 2."
+  attackDescription: "OH le BG n\xB01 !\nMultiplie les effets des heal par 2."
   cardSprite: {fileID: 21300000, guid: c57eda7aca211e547907096cf45d28a8, type: 3}
   actionCost: 4
   attackType: 1

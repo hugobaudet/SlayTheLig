@@ -13,7 +13,10 @@ MonoBehaviour:
   m_Name: RollerEma
   m_EditorClassIdentifier: 
   cardName: As du roller
-  attackDescription: Octroie 20 d'armure. Fait partie du combo ultime !
+  attackDescription: 'Aie la chute...
+
+    Octroie 20 d''armure. Fait partie du combo
+    ultime !'
   cardSprite: {fileID: 21300000, guid: cb2b9397b96af6047b8946cf3f91c753, type: 3}
   actionCost: 4
   attackType: 1
@@ -28,6 +31,4 @@ MonoBehaviour:
   - card: {fileID: 11400000, guid: 6f274fbbf48ad3343bc1a9486cef3a61, type: 2}
     number: 1
   - card: {fileID: 11400000, guid: 54884a469f927444397d3fbc3a2a8962, type: 2}
-    number: 1
-  - card: {fileID: 11400000, guid: dd2d1b2b473fdbc468e1d88b4826365a, type: 2}
     number: 1

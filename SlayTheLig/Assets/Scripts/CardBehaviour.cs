@@ -57,6 +57,7 @@ public class CardBehaviour : MonoBehaviour, IDragHandler, IPointerEnterHandler, 
     {
         if (flipItDown == isFaceDown) return;
         isFaceDown = flipItDown;
+        AudioManager.instance.PlayClip("Card");
         StartCoroutine(ChangeSprite());
     }
 

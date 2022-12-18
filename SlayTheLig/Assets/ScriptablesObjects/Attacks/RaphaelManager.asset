@@ -13,8 +13,8 @@ MonoBehaviour:
   m_Name: RaphaelManager
   m_EditorClassIdentifier: 
   cardName: "Manager Rapha\xEBl"
-  attackDescription: "Un beau goss \xE0 l'\xE9tat pur. Multiplie les effets des d\xE9g\xE2ts
-    par 2."
+  attackDescription: "WOW le BG n\xB02 !\nMultiplie les effets des d\xE9g\xE2ts par
+    2."
   cardSprite: {fileID: 21300000, guid: 577d01d7c3d5f664fa005bf05e13208b, type: 3}
   actionCost: 4
   attackType: 1

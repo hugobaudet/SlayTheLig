@@ -7,6 +7,10 @@ using UnityEngine.UI;
 
 public class CharacterBehaviour : MonoBehaviour
 {
+    [SerializeField]
+    private Image shieldImage;
+    private Tween shieldFadeTween;
+
     public int maxHP, knockBackForce;
 
     [HideInInspector]
@@ -74,6 +78,15 @@ public class CharacterBehaviour : MonoBehaviour
     {
         this.armourAmount += armourAmount;
         FightSystem.instance.uiManager.UpdateUIArmour();
+        StartCoroutine(ArmourAdded());        
+    }
+
+    IEnumerator ArmourAdded()
+    {
+        shieldFadeTween = shieldImage.DOFade(1, .5f).SetEase(Ease.OutQuint);
+        yield return shieldFadeTween.WaitForCompletion();
+        shieldFadeTween = shieldImage.DOFade(0, 1f);
+        yield return shieldFadeTween.WaitForCompletion();
         FightSystem.instance.PlayNextPhase();
     }
 

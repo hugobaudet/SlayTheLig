@@ -86,9 +86,10 @@ public class FightSystem : MonoBehaviour
         PlayNextPhase();
     }
 
+    //Used by the button
     public void EndPlayerTurn()
     {
-        if (currentFightStep != FightStep.PlayerChoice) return;
+        //if (currentFightStep != FightStep.PlayerChoice) return;
         StartEnemyTurn();
     }
 

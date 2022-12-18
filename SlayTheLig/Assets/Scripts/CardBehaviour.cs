@@ -14,6 +14,8 @@ public class CardBehaviour : MonoBehaviour, IDragHandler, IPointerEnterHandler, 
     [HideInInspector]
     public bool isFaceDown, isInAnimation, isBeingDrag;
 
+    [SerializeField] private bool updateCardName;
+
     [HideInInspector]
     public int cardIndex;
 
@@ -23,7 +25,8 @@ public class CardBehaviour : MonoBehaviour, IDragHandler, IPointerEnterHandler, 
     [SerializeField]
     private Image image;
 
-    public TMP_Text cardActionPoint, cardDescription;
+    [SerializeField]
+    private TMP_Text cardActionPoint, cardDescription, cardName;
 
     [SerializeField]
     private Sprite cardBack;
@@ -39,6 +42,7 @@ public class CardBehaviour : MonoBehaviour, IDragHandler, IPointerEnterHandler, 
         isInAnimation = false;
         image.sprite = cardBack;
         initialGlobalPosition = transform.position;
+        cardName.gameObject.SetActive(updateCardName);
         foreach (Transform item in transform)
         {
             item.gameObject.SetActive(false);
@@ -81,6 +85,10 @@ public class CardBehaviour : MonoBehaviour, IDragHandler, IPointerEnterHandler, 
     {
         if (attack == null) return;
         this.attack = attack;
+        if (updateCardName)
+        {
+            cardName.text = attack.cardName;
+        }
         cardActionPoint.text = attack.actionCost.ToString();
         cardDescription.text = attack.attackDescription.ToString();
         ChangeSide(false);
@@ -129,6 +137,7 @@ public class CardBehaviour : MonoBehaviour, IDragHandler, IPointerEnterHandler, 
 
     public void OnEndDrag(PointerEventData eventData)
     {
+        if (isFaceDown) return;
         isBeingDrag = false;
         if (globalMousePosition.y >= FightSystem.instance.uiManager.minimuHeight.position.y)
         {

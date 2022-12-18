@@ -92,6 +92,7 @@ public class FightSystem : MonoBehaviour
     //Used by the button
     public void EndPlayerTurn()
     {
+        if (currentFightStep != FightStep.PlayerChoice) return;
         endTurnEvent.Invoke();
         StartEnemyTurn();
     }

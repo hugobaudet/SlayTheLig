@@ -11,7 +11,7 @@ public class CardBehaviour : MonoBehaviour, IDragHandler, IPointerEnterHandler, 
 {
     private RectTransform draggingObject;
     private Vector3 globalMousePosition, initialGlobalPosition;
-    [HideInInspector]
+    //[HideInInspector]
     public bool isFaceDown, isInAnimation, isBeingDrag;
 
     [SerializeField] private bool updateCardName;
@@ -52,7 +52,7 @@ public class CardBehaviour : MonoBehaviour, IDragHandler, IPointerEnterHandler, 
     public void SetInitialPosition(float positionX)
     {
         initialGlobalPosition.x = positionX;
-        transform.DOMove(initialGlobalPosition, 1f);
+        moveTween = transform.DOMove(initialGlobalPosition, 1f);
     }
 
     public void ChangeSide(bool flipItDown)
@@ -74,7 +74,7 @@ public class CardBehaviour : MonoBehaviour, IDragHandler, IPointerEnterHandler, 
         }
         rotateTween = transform.DORotate(Vector3.zero, .5f);
         yield return rotateTween.WaitForCompletion();
-        isInAnimation = true;
+        isInAnimation = false;
         if (!isFaceDown)
         {
             FightSystem.instance.StartPlayerChoice();

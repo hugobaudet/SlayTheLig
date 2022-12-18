@@ -28,14 +28,11 @@ public class AudioManager : MonoBehaviour
 
     private void Awake()
     {
-        if (instance != null)
+        if (instance == null)
         {
-            Debug.LogWarning("There is more than one AudioManager in the scene");
-            Destroy(gameObject);
-            return;
+            DontDestroyOnLoad(gameObject);
+            instance = this;
         }
-        DontDestroyOnLoad(gameObject);
-        instance = this;
         InitializeAllClips();
     }
 
@@ -52,7 +49,7 @@ public class AudioManager : MonoBehaviour
             s.source.pitch = s.pitch;
             s.source.volume = s.volume;
             s.source.loop = s.loop;
-            if (s.loop)
+            if (s.loop && this == instance)
             {
                 s.source.Play();
             }

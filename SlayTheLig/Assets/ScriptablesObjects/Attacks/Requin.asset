@@ -15,10 +15,9 @@ MonoBehaviour:
   cardName: MascotteLIG
   attackDescription: "GROOOOAAAAAAMMM !!! Inflige 50 d\xE9g\xE2ts."
   cardSprite: {fileID: 21300000, guid: a1e5a186b0f2c7947943857bfec62cd3, type: 3}
-  actionCost: 10
+  actionCost: 8
   attackType: 0
   noComboAttackType: 0
-  noComboBuffAttackType: 0
   basicDamage: 50
   comboDamage: 0
   basicHeal: 0

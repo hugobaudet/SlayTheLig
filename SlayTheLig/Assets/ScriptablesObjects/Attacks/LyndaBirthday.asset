@@ -13,15 +13,15 @@ MonoBehaviour:
   m_Name: LyndaBirthday
   m_EditorClassIdentifier: 
   cardName: Linda's Birthday
-  attackDescription: "Un g\xE2teau pour la meilleure dev Web. Rend 30 PVs."
+  attackDescription: "Un g\xE2teau pour la meilleure dev Web. Rend 25 PVs."
   cardSprite: {fileID: 21300000, guid: 5f7dbb49c8b9e60458aaa42c65861d47, type: 3}
-  actionCost: 6
+  actionCost: 5
   attackType: 2
   noComboAttackType: 0
   noComboBuffAttackType: 0
   basicDamage: 0
   comboDamage: 0
-  basicHeal: 30
+  basicHeal: 25
   basicDefense: 0
   buffPower: 0
   comboPieces: []

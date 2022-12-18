@@ -16,11 +16,11 @@ MonoBehaviour:
   attackDescription: "Carte en cours de cr\xE9ation. Fait partie de la combo ultime
     !"
   cardSprite: {fileID: 21300000, guid: 62ce01ddca719d34ea9648c586a7cc94, type: 3}
-  actionCost: 4
+  actionCost: 2
   attackType: 1
   noComboAttackType: 0
   noComboBuffAttackType: 0
-  basicDamage: 20
+  basicDamage: 4
   comboDamage: 30
   basicHeal: 0
   basicDefense: 0

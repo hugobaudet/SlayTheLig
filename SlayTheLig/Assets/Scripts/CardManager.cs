@@ -10,17 +10,8 @@ public class CardManager : MonoBehaviour
  
     public List<CardBehaviour> cardBehaviours;
 
-    private float cardWidth;
-    private Transform cardPlacement;
-
     public void Initialize()
     {
-        cardWidth = ((RectTransform)cardBehaviours[0].transform).sizeDelta.x;
-        foreach (CardBehaviour item in cardBehaviours)
-        {
-            item.Initialize();
-        }
-        cardPlacement = FightSystem.instance.uiManager.cardPlacement;
         currentDeck.Clear();
         currentHand.Clear();
         currentDiscardPile.Clear();
@@ -35,13 +26,9 @@ public class CardManager : MonoBehaviour
         {
             currentHand.Add(null);
         }
-        for (int i = 0; i < cardBehaviours.Count; i++)
-        {
-            cardBehaviours[i].cardIndex = i;
-        }
+        ResetCardsInHand();
     }
 
-    //IT WORKS
     public bool IsComboPossible(Attack attackCombo)
     {
         List<Attack> copyHand = new List<Attack>(currentHand);
@@ -64,41 +51,24 @@ public class CardManager : MonoBehaviour
 
     public void RemoveCardAt(int index)
     {
-        if (currentHand[index] == null) return;
         currentDiscardPile.Add(currentHand[index]);
         currentHand[index] = null;
-        cardBehaviours[index].ChangeSide(true);
         FightSystem.instance.uiManager.UpdateUIPiles(currentDeck.Count, currentDiscardPile.Count);
-        ReplaceCards();
     }
 
-    //IT WORKS
     public void RemoveComboPieces(Attack attack)
     {
-        for (int i = 0; i < attack.comboPieces.Count; i++)
+        for (int i = 0; i < cardBehaviours.Count; i++)
         {
-            for (int j = 0; j < attack.comboPieces[i].number; j++)
+            for (int y = 0; y < attack.comboPieces.Count; y++)
             {
-                for (int k = 0; k < cardBehaviours.Count; k++)
+                if (attack.comboPieces[y].card == cardBehaviours[i].attack)
                 {
-                    if (attack.comboPieces[i].card == cardBehaviours[k].attack)
-                    {
-                        RemoveCardAt(k);
-                        break;
-                    }
+                    RemoveCardAt(i);
+                    cardBehaviours[i].ChangeAppearance(true);
+                    break;
                 }
             }
-        }
-    }
-    
-    //IT MIGHT WORK
-    private void ReplaceCards()
-    {
-        List<CardBehaviour> cards = cardBehaviours.FindAll(x => x.attack != null);
-        if (cards.Count == 0) return;
-        for (int i = 0; i < cards.Count; i++)
-        {
-            cards[i].SetInitialPosition(cardPlacement.position.x + (cardWidth * i) - ((cardWidth/2f) * (cards.Count -1)));
         }
     }
 
@@ -106,20 +76,29 @@ public class CardManager : MonoBehaviour
     {
         for (int i = 0; i < currentHand.Count; i++)
         {
-            if (currentHand[i] == null)
+            if (currentHand[i] != null)
             {
-                if (currentDeck.Count != 0)
-                {
-                    int index = Random.Range(0, currentDeck.Count);
-                    currentHand[i] = currentDeck[index];
-                    currentDeck.RemoveAt(index);
-                }
-                else
-                {
-                    int index = Random.Range(0, currentDiscardPile.Count);
-                    currentHand[i] = currentDiscardPile[index];
-                    currentDiscardPile.RemoveAt(index);
-                }
+                currentDeck.Add(currentHand[i]);
+                currentHand[i] = null;
+            }
+        }
+        for (int i = 0; i < cardBehaviours.Count; i++)
+        {
+            cardBehaviours[i].ChangeAppearance(true);
+        }
+        for (int i = 0; i < 4; i++)
+        {
+            if (currentDeck.Count != 0)
+            {
+                int index = Random.Range(0, currentDeck.Count);
+                currentHand[i] = currentDeck[index];
+                currentDeck.RemoveAt(index);
+            }
+            else
+            {
+                int index = Random.Range(0, currentDiscardPile.Count);
+                currentHand[i] = currentDiscardPile[index];
+                currentDiscardPile.RemoveAt(index);
             }
         }
         if (currentDeck.Count == 0)
@@ -132,6 +111,5 @@ public class CardManager : MonoBehaviour
             cardBehaviours[i].SetNewAttack(currentHand[i]);
         }
         FightSystem.instance.uiManager.UpdateUIPiles(currentDeck.Count, currentDiscardPile.Count);
-        ReplaceCards();
     }
 }

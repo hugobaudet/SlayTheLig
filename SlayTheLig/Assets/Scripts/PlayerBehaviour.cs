@@ -8,13 +8,15 @@ public class PlayerBehaviour : CharacterBehaviour
     public int maxActionCost;
 
     [HideInInspector]
-    public int currentActionCost, isTurnBuffed, isDamageBuffed, isArmourBuffed, isHealBuffed;
+    public int currentActionCost;
 
-    public override void ReInitializeBeforeTurn()
+    [HideInInspector]
+    public int isTurnBuffed, isDamageBuffed, isArmourBuffed, isHealBuffed;
+
+    public override void StartRound()
     {
-        base.ReInitializeBeforeTurn();
+        base.StartRound();
         currentActionCost = maxActionCost;
-        FightSystem.instance.uiManager.UpdateUIActionPoint();
         isTurnBuffed = 1;
         isHealBuffed = 1;
         isDamageBuffed = 1;
@@ -32,21 +34,20 @@ public class PlayerBehaviour : CharacterBehaviour
         {
             case AttackType.SimpleAttack:
             case AttackType.ComboAttack:
-                isDamageBuffed *= attack.buffPower;
+                isDamageBuffed *= 2;
                 break;
             case AttackType.Heal:
-                isHealBuffed *= attack.buffPower;
+                isHealBuffed *= 2;
                 break;
             case AttackType.Buff:
-                isTurnBuffed *= attack.buffPower;
+                isTurnBuffed *= 2;
                 break;
             case AttackType.Defense:
-                isArmourBuffed *= attack.buffPower;
+                isHealBuffed *= 2;
                 break;
             default:
                 break;
         }
-        FightSystem.instance.PlayNextPhase();
     }
 
     public override void HealCharacter(int healAmount)

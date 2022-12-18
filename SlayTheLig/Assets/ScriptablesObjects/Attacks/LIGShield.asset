@@ -13,9 +13,9 @@ MonoBehaviour:
   m_Name: LIGShield
   m_EditorClassIdentifier: 
   cardName: LIGShield
-  attackDescription: "LIG \xE0 la rescousse ! Octroie 40 d'armures."
+  attackDescription: "LIG \xE0 la rescousse ! Rend 40 PVs."
   cardSprite: {fileID: 21300000, guid: 7c26cfff13593544dab1059772c02808, type: 3}
-  actionCost: 8
+  actionCost: 6
   attackType: 4
   noComboAttackType: 0
   noComboBuffAttackType: 0

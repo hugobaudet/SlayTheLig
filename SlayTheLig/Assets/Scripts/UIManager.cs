@@ -22,7 +22,7 @@ public class UIManager : MonoBehaviour
 
     public void UpdateUIActionPoint()
     {
-        actionPoint.text = player.currentActionCost + " / " + player.maxActionCost;
+        actionPoint.text = player.currentActionCost.ToString() /*+ " / " + player.maxActionCost*/;
     }
 
     public void UpdateUIPiles(int deck, int discard)

@@ -9,7 +9,7 @@ public class CharacterBehaviour : MonoBehaviour
 {
     [SerializeField]
     private Image shieldImage;
-    private Tween shieldFadeTween;
+    private Tween shieldFadeTween, shieldScaleTween;
 
     public int maxHP, knockBackForce;
 
@@ -84,8 +84,10 @@ public class CharacterBehaviour : MonoBehaviour
     IEnumerator ArmourAdded()
     {
         shieldFadeTween = shieldImage.DOFade(1, .5f).SetEase(Ease.OutQuint);
+        shieldScaleTween = shieldImage.transform.DOScale(2, .5f).SetEase(Ease.OutQuint);
         yield return shieldFadeTween.WaitForCompletion();
         shieldFadeTween = shieldImage.DOFade(0, 1f);
+        shieldScaleTween = shieldImage.transform.DOScale(1, 1f);
         yield return shieldFadeTween.WaitForCompletion();
         FightSystem.instance.PlayNextPhase();
     }

@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: FroggyDefense
   m_EditorClassIdentifier: 
   cardName: FroggyDefense
-  attackDescription: Une grenouille porte-bonheur. Octroie 20 d'armure.
+  attackDescription: Octroie 20 d'armure.
   cardSprite: {fileID: 21300000, guid: cf50ae58a5e186b4b8e6f7b8c35b2a25, type: 3}
   actionCost: 4
   attackType: 4

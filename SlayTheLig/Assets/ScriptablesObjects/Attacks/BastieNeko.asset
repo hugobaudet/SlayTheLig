@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: BastieNeko
   m_EditorClassIdentifier: 
   cardName: Neko Boy
-  attackDescription: "C'est Bastien en chat quoi. Inflige 7 d\xE9gats."
+  attackDescription: "Inflige 7 d\xE9gats."
   cardSprite: {fileID: 21300000, guid: bf2584ab7a9d7a342b490dc64f60bdfd, type: 3}
   actionCost: 1
   attackType: 0

@@ -1,3 +1,4 @@
+using DG.Tweening;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
@@ -60,10 +61,16 @@ public class EnemyBehaviour : CharacterBehaviour
                 FightSystem.instance.WinLose(false);
                 return;
             }
-            image.sprite = phaseSprites.Find(x => x.phase == currentPhase).sprite;
             FightSystem.instance.uiManager.ChangePhaseColor(phaseColors.Evaluate(1- (currentPhase / 3f)));
             currentHP = maxHP;
+            StartCoroutine(ChangeSprite());
         }
+    }
+
+    IEnumerator ChangeSprite()
+    {
+        yield return new WaitForSeconds(.5f);
+        image.sprite = phaseSprites.Find(x => x.phase == currentPhase).sprite;
     }
 
     public void ChoseNextAttack()

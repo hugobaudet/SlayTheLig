@@ -104,10 +104,12 @@ public class CardManager : MonoBehaviour
 
     public void ResetCardsInHand()
     {
+        bool hasHandChanged = false;
         for (int i = 0; i < currentHand.Count; i++)
         {
             if (currentHand[i] == null)
             {
+                hasHandChanged = true;
                 if (currentDeck.Count != 0)
                 {
                     int index = Random.Range(0, currentDeck.Count);
@@ -121,6 +123,11 @@ public class CardManager : MonoBehaviour
                     currentDiscardPile.RemoveAt(index);
                 }
             }
+        }
+        if (!hasHandChanged)
+        {
+            FightSystem.instance.PlayNextPhase();
+            return;
         }
         if (currentDeck.Count == 0)
         {

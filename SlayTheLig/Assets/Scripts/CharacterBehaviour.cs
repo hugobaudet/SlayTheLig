@@ -50,20 +50,37 @@ public class CharacterBehaviour : MonoBehaviour
         currentHP -= Mathf.Clamp(damage, 0, currentHP);
         damageEvent.Invoke();
         StartCoroutine(KnockBack(direction));
+        if (direction < 0)
+        {
+            StartCoroutine(FightSystem.instance.enemy.KnockBack(direction, false));
+        }
+        else
+        {
+            StartCoroutine(FightSystem.instance.player.KnockBack(direction, false));
+        }
         CheckDeath();
         FightSystem.instance.uiManager.UpdateUIArmour();
         FightSystem.instance.uiManager.UpdateUIHealthBar();
     }
 
-    IEnumerator KnockBack(int direction)
+    public IEnumerator KnockBack(int direction, bool initial = true)
     {
         knockBackTween = transform.DOMove(initialPosition + Vector3.right * direction * knockBackForce,.2f).SetEase(Ease.OutExpo);
-        sprite.color = Color.red;
+        if (initial)
+        {
+            sprite.color = Color.red;
+        }
         yield return knockBackTween.WaitForCompletion();
         knockBackTween = transform.DOMove(initialPosition,.3f);
-        sprite.color = Color.white;
+        if (initial)
+        {
+            sprite.color = Color.white;
+        }
         yield return knockBackTween.WaitForCompletion();
-        FightSystem.instance.PlayNextPhase();
+        if (initial)
+        {
+            FightSystem.instance.PlayNextPhase();
+        }
     }
 
     protected virtual void CheckDeath()

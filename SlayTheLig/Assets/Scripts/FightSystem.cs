@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Runtime.InteropServices.WindowsRuntime;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.Events;
 using UnityEngine.Rendering;
 
 public enum FightStep
@@ -62,6 +63,8 @@ public class FightSystem : MonoBehaviour
 
     private Card lastattack;
 
+    public UnityEvent endTurnEvent;
+
     private void Start()
     {
         lastattack = null;
@@ -89,7 +92,7 @@ public class FightSystem : MonoBehaviour
     //Used by the button
     public void EndPlayerTurn()
     {
-        //if (currentFightStep != FightStep.PlayerChoice) return;
+        endTurnEvent.Invoke();
         StartEnemyTurn();
     }
 

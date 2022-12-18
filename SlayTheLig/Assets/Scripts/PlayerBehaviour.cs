@@ -1,10 +1,12 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 using UnityEngine.EventSystems;
 
 public class PlayerBehaviour : CharacterBehaviour
 {
+    public UnityEvent buffEvent;
     public int maxActionCost;
 
     [HideInInspector]
@@ -28,6 +30,7 @@ public class PlayerBehaviour : CharacterBehaviour
 
     public void ApplyBuff(Attack attack)
     {
+        buffEvent.Invoke();
         switch (attack.noComboBuffAttackType)
         {
             case AttackType.SimpleAttack:

@@ -46,8 +46,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   allSounds:
   - name: Music
-    clip: {fileID: 0}
-    volume: 0.1
+    clip: {fileID: 8300000, guid: d74876a1133a8034db441859916f10a0, type: 3}
+    volume: 0.08
     pitch: 1
     onlyOneCanBePlayed: 1
     loop: 1
@@ -59,8 +59,8 @@ MonoBehaviour:
     onlyOneCanBePlayed: 1
     loop: 0
     source: {fileID: 0}
-  - name: Damage
-    clip: {fileID: 0}
+  - name: CatDamage
+    clip: {fileID: 8300000, guid: 91b35691e7f86f6448ccaf226951e046, type: 3}
     volume: 0.2
     pitch: 1
     onlyOneCanBePlayed: 0
@@ -89,6 +89,13 @@ MonoBehaviour:
     source: {fileID: 0}
   - name: EndTurn
     clip: {fileID: 0}
+    volume: 0.2
+    pitch: 1
+    onlyOneCanBePlayed: 0
+    loop: 0
+    source: {fileID: 0}
+  - name: ArtyuDamage
+    clip: {fileID: 8300000, guid: b1c96348d0beff94cac9495172536546, type: 3}
     volume: 0.2
     pitch: 1
     onlyOneCanBePlayed: 0

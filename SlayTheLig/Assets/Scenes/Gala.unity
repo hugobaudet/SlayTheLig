@@ -375,6 +375,9 @@ MonoBehaviour:
     number: 2
   - card: {fileID: 11400000, guid: ea88f1ee7325a0b479963132477fa684, type: 2}
     number: 1
+  endTurnEvent:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!114 &156464483
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -408,7 +411,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 3
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!224 &202571466 stripped
 RectTransform:
@@ -939,8 +942,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 818, y: -243}
-  m_SizeDelta: {x: 1000, y: 500}
+  m_AnchoredPosition: {x: 650, y: -261}
+  m_SizeDelta: {x: 1262.9968, y: 631.4984}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &538593473
 MonoBehaviour:
@@ -1236,6 +1239,18 @@ MonoBehaviour:
     m_Mode: 0
     m_NumColorKeys: 2
     m_NumAlphaKeys: 2
+  damageEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  healEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  shieldEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  buffEvent:
+    m_PersistentCalls:
+      m_Calls: []
   maxActionCost: 10
   currentActionCost: 0
   isTurnBuffed: 0
@@ -1531,6 +1546,100 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
+--- !u!1 &828769271
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 828769273}
+  - component: {fileID: 828769272}
+  m_Layer: 0
+  m_Name: ---AudioManager--- (1)
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &828769272
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 828769271}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e4d23b89797c81843bef5bb12f3dbab1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  allSounds:
+  - name: Music
+    clip: {fileID: 0}
+    volume: 0.1
+    pitch: 1
+    onlyOneCanBePlayed: 1
+    loop: 1
+    source: {fileID: 0}
+  - name: Card
+    clip: {fileID: 0}
+    volume: 0.2
+    pitch: 1
+    onlyOneCanBePlayed: 1
+    loop: 0
+    source: {fileID: 0}
+  - name: Damage
+    clip: {fileID: 0}
+    volume: 0.2
+    pitch: 1
+    onlyOneCanBePlayed: 0
+    loop: 0
+    source: {fileID: 0}
+  - name: Shield
+    clip: {fileID: 0}
+    volume: 0.2
+    pitch: 1
+    onlyOneCanBePlayed: 0
+    loop: 0
+    source: {fileID: 0}
+  - name: Heal
+    clip: {fileID: 0}
+    volume: 0.2
+    pitch: 1
+    onlyOneCanBePlayed: 0
+    loop: 0
+    source: {fileID: 0}
+  - name: Buffs
+    clip: {fileID: 0}
+    volume: 0.2
+    pitch: 1
+    onlyOneCanBePlayed: 0
+    loop: 0
+    source: {fileID: 0}
+  - name: EndTurn
+    clip: {fileID: 0}
+    volume: 0.2
+    pitch: 1
+    onlyOneCanBePlayed: 0
+    loop: 0
+    source: {fileID: 0}
+--- !u!4 &828769273
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 828769271}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 4
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &849925915
 GameObject:
   m_ObjectHideFlags: 0
@@ -2423,7 +2532,7 @@ RectTransform:
   - {fileID: 1467867661}
   - {fileID: 727287666}
   m_Father: {fileID: 0}
-  m_RootOrder: 4
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
@@ -2542,8 +2651,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -555, y: -266.57684}
-  m_SizeDelta: {x: 229.7412, y: 227.9294}
+  m_AnchoredPosition: {x: -585, y: -257}
+  m_SizeDelta: {x: 246.6859, y: 244.7405}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1205055655
 MonoBehaviour:
@@ -3452,51 +3561,6 @@ RectTransform:
   m_AnchoredPosition: {x: -134, y: 0}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!1 &1823053525
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1823053527}
-  - component: {fileID: 1823053526}
-  m_Layer: 0
-  m_Name: ---AudioManager---
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!114 &1823053526
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1823053525}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e4d23b89797c81843bef5bb12f3dbab1, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  allSounds: []
---- !u!4 &1823053527
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1823053525}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_RootOrder: 2
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1841593596
 GameObject:
   m_ObjectHideFlags: 0
@@ -3562,6 +3626,15 @@ MonoBehaviour:
     m_Mode: 1
     m_NumColorKeys: 3
     m_NumAlphaKeys: 2
+  damageEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  healEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  shieldEvent:
+    m_PersistentCalls:
+      m_Calls: []
   enemyAttacks:
   - phase: 1
     type: 0
@@ -3843,8 +3916,8 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 36
-  m_fontSizeBase: 36
+  m_fontSize: 50
+  m_fontSizeBase: 50
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18

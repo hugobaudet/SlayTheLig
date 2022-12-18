@@ -31,8 +31,10 @@ public class AudioManager : MonoBehaviour
         if (instance != null)
         {
             Debug.LogError("There is more than one AudioManager in the scene");
+            Destroy(gameObject);
             return;
         }
+        DontDestroyOnLoad(gameObject);
         instance = this;
         InitializeAllClips();
     }
@@ -50,6 +52,10 @@ public class AudioManager : MonoBehaviour
             s.source.pitch = s.pitch;
             s.source.volume = s.volume;
             s.source.loop = s.loop;
+            if (s.loop)
+            {
+                s.source.Play();
+            }
             s.source.playOnAwake = s.loop;
         }
     }

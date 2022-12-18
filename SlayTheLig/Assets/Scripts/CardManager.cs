@@ -98,7 +98,7 @@ public class CardManager : MonoBehaviour
         if (cards.Count == 0) return;
         for (int i = 0; i < cards.Count; i++)
         {
-            cards[i].SetInitialPosition(cardPlacement.position.x + (cardWidth * i) - ((cardWidth/2f) * (cards.Count -1)));
+            cards[i].SetInitialPosition(cardPlacement.position.x + ((i-1.5f) * 35) + (cardWidth * i) - ((cardWidth/2f) * (cards.Count -1)));
         }
     }
 

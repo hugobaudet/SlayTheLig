@@ -3,6 +3,7 @@ using Mono.Cecil.Cil;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 using UnityEngine.UI;
 
 public class CharacterBehaviour : MonoBehaviour
@@ -22,6 +23,8 @@ public class CharacterBehaviour : MonoBehaviour
     protected Tween knockBackTween;
 
     public Gradient phaseColors;
+
+    public UnityEvent damageEvent, healEvent, shieldEvent;
 
     public virtual void InitializeCharacter()
     {
@@ -45,6 +48,7 @@ public class CharacterBehaviour : MonoBehaviour
         damage -= armourAmount;
         armourAmount -= Mathf.Clamp(tmpDamage, 0, armourAmount);
         currentHP -= Mathf.Clamp(damage, 0, currentHP);
+        damageEvent.Invoke();
         StartCoroutine(KnockBack(direction));
         CheckDeath();
         FightSystem.instance.uiManager.UpdateUIArmour();
@@ -77,8 +81,9 @@ public class CharacterBehaviour : MonoBehaviour
     public virtual void AddArmour(int armourAmount)
     {
         this.armourAmount += armourAmount;
+        shieldEvent.Invoke();
         FightSystem.instance.uiManager.UpdateUIArmour();
-        StartCoroutine(ArmourAdded());        
+        StartCoroutine(ArmourAdded());
     }
 
     IEnumerator ArmourAdded()
@@ -95,6 +100,7 @@ public class CharacterBehaviour : MonoBehaviour
     public virtual void HealCharacter(int healAmount)
     {
         currentHP += Mathf.Clamp(healAmount, 0, maxHP - currentHP);
+        healEvent.Invoke();
         FightSystem.instance.uiManager.UpdateUIHealthBar();
         FightSystem.instance.PlayNextPhase();
     }

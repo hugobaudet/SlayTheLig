@@ -831,7 +831,56 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e4d23b89797c81843bef5bb12f3dbab1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  allSounds: []
+  allSounds:
+  - name: Music
+    clip: {fileID: 0}
+    volume: 0.1
+    pitch: 1
+    onlyOneCanBePlayed: 1
+    loop: 1
+    source: {fileID: 0}
+  - name: Card
+    clip: {fileID: 0}
+    volume: 0.2
+    pitch: 1
+    onlyOneCanBePlayed: 1
+    loop: 0
+    source: {fileID: 0}
+  - name: Damage
+    clip: {fileID: 0}
+    volume: 0.2
+    pitch: 1
+    onlyOneCanBePlayed: 0
+    loop: 0
+    source: {fileID: 0}
+  - name: Shield
+    clip: {fileID: 0}
+    volume: 0.2
+    pitch: 1
+    onlyOneCanBePlayed: 0
+    loop: 0
+    source: {fileID: 0}
+  - name: Heal
+    clip: {fileID: 0}
+    volume: 0.2
+    pitch: 1
+    onlyOneCanBePlayed: 0
+    loop: 0
+    source: {fileID: 0}
+  - name: Buffs
+    clip: {fileID: 0}
+    volume: 0.2
+    pitch: 1
+    onlyOneCanBePlayed: 0
+    loop: 0
+    source: {fileID: 0}
+  - name: EndTurn
+    clip: {fileID: 0}
+    volume: 0.2
+    pitch: 1
+    onlyOneCanBePlayed: 0
+    loop: 0
+    source: {fileID: 0}
 --- !u!4 &387426797
 Transform:
   m_ObjectHideFlags: 0

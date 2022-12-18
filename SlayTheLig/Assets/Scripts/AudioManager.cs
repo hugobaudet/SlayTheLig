@@ -30,7 +30,7 @@ public class AudioManager : MonoBehaviour
     {
         if (instance != null)
         {
-            Debug.LogError("There is more than one AudioManager in the scene");
+            Debug.LogWarning("There is more than one AudioManager in the scene");
             Destroy(gameObject);
             return;
         }
@@ -89,7 +89,6 @@ public class AudioManager : MonoBehaviour
             return;
         }
         if (s.source.isPlaying && s.onlyOneCanBePlayed) return;
-        s.source.pitch = UnityEngine.Random.Range(s.pitch - 0.1f, s.pitch + 0.1f);
         s.source.Play();
     }
 }

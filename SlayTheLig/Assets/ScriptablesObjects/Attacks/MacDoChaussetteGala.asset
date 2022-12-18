@@ -13,7 +13,8 @@ MonoBehaviour:
   m_Name: MacDoChaussetteGala
   m_EditorClassIdentifier: 
   cardName: MacDoChaussetteGala
-  attackDescription: "Inflige 5 d\xE9g\xE2ts. Combo X3 avec la chaussette de Chlo\xE9."
+  attackDescription: "BFF de chaussettes !\nInflige 5 d\xE9g\xE2ts. Combo X3 avec
+    la chaussette de Chlo\xE9."
   cardSprite: {fileID: 21300000, guid: 675fcc6c843d16c4eab6e14155df2ef3, type: 3}
   actionCost: 2
   attackType: 1

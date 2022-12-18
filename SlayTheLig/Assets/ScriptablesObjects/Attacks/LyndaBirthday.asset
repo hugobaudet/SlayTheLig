@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: LyndaBirthday
   m_EditorClassIdentifier: 
   cardName: Linda's Birthday
-  attackDescription: Rend 30 PVs.
+  attackDescription: "Et un bon anniv' \xE0 la best !\nRend 30 PVs."
   cardSprite: {fileID: 21300000, guid: 5f7dbb49c8b9e60458aaa42c65861d47, type: 3}
   actionCost: 6
   attackType: 2

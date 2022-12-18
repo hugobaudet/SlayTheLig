@@ -3590,6 +3590,9 @@ MonoBehaviour:
   - phase: 3
     type: 2
     value: 7
+  - phase: 1
+    type: 0
+    value: 7
   nextAttack:
     phase: 0
     type: 0

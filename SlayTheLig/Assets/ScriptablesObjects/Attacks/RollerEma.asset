@@ -20,7 +20,7 @@ MonoBehaviour:
   noComboAttackType: 4
   noComboBuffAttackType: 0
   basicDamage: 0
-  comboDamage: 75
+  comboDamage: 30
   basicHeal: 0
   basicDefense: 20
   buffPower: 0

@@ -12,6 +12,8 @@ public class PlayerBehaviour : CharacterBehaviour
     [HideInInspector]
     public int currentActionCost, isTurnBuffed, isDamageBuffed, isArmourBuffed, isHealBuffed;
 
+    private Animator animator;
+
     public override void ReInitializeBeforeTurn()
     {
         base.ReInitializeBeforeTurn();
@@ -21,6 +23,12 @@ public class PlayerBehaviour : CharacterBehaviour
         isHealBuffed = 1;
         isDamageBuffed = 1;
         isArmourBuffed = 1;
+        animator = GetComponent<Animator>();
+    }
+
+    public void LaunchAttackAnimation()
+    {
+        animator.SetTrigger("Attack");
     }
 
     public bool CanPlayACard(Attack attack)

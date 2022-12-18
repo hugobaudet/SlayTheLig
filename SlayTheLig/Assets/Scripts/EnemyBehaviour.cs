@@ -88,6 +88,7 @@ public class EnemyBehaviour : CharacterBehaviour
 
     public override void TakeDamage(int damage, int direction = -1)
     {
+        FightSystem.instance.player.LaunchAttackAnimation();
         damage *= FightSystem.instance.player.isTurnBuffed * FightSystem.instance.player.isDamageBuffed;
         base.TakeDamage(damage, 1);
     }

@@ -13,8 +13,7 @@ MonoBehaviour:
   m_Name: Creporentin
   m_EditorClassIdentifier: 
   cardName: Creporentin
-  attackDescription: "Chef Corentin et ces cr\xEApes d\xE9barquent ! Soigne de 25
-    PVs"
+  attackDescription: Soigne de 25 PVs
   cardSprite: {fileID: 21300000, guid: f943ccfcc95efca41af3826697acd5bc, type: 3}
   actionCost: 3
   attackType: 2

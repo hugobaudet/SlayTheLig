@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: StageChezUbisoft
   m_EditorClassIdentifier: 
   cardName: Stage Chez Ubisoft
-  attackDescription: "Il en a un et pas des moindres ! Inflige 30 d\xE9g\xE2ts."
+  attackDescription: "Inflige 30 d\xE9g\xE2ts."
   cardSprite: {fileID: 21300000, guid: 4d1ced6e53fd3d940a16109c95bb4ad8, type: 3}
   actionCost: 7
   attackType: 0

@@ -27,7 +27,5 @@ MonoBehaviour:
   comboPieces:
   - card: {fileID: 11400000, guid: 6f274fbbf48ad3343bc1a9486cef3a61, type: 2}
     number: 1
-  - card: {fileID: 11400000, guid: dd2d1b2b473fdbc468e1d88b4826365a, type: 2}
-    number: 1
   - card: {fileID: 11400000, guid: 9309d91bc5f63eb448f7f8d858b10eb4, type: 2}
     number: 1

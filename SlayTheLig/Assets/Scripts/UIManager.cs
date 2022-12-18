@@ -26,7 +26,7 @@ public class UIManager : MonoBehaviour
 
     public void UpdateUIActionPoint()
     {
-        actionPoint.text = player.currentActionCost.ToString() /*+ " / " + player.maxActionCost*/;
+        actionPoint.text = player.currentActionCost.ToString();
     }
 
     public void UpdateUIPiles(int deck, int discard)

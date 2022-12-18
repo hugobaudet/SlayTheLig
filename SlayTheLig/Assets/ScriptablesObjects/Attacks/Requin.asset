@@ -13,13 +13,13 @@ MonoBehaviour:
   m_Name: Requin
   m_EditorClassIdentifier: 
   cardName: MascotteLIG
-  attackDescription: "Inflige 50 d\xE9g\xE2ts."
+  attackDescription: "Trop pipou la mascotte !\nInflige 15 d\xE9g\xE2ts."
   cardSprite: {fileID: 21300000, guid: a1e5a186b0f2c7947943857bfec62cd3, type: 3}
   actionCost: 10
   attackType: 0
   noComboAttackType: 0
   noComboBuffAttackType: 0
-  basicDamage: 50
+  basicDamage: 15
   comboDamage: 0
   basicHeal: 0
   basicDefense: 0

@@ -40,6 +40,11 @@ public class EnemyBehaviour : CharacterBehaviour
 
     public List<Phase> phaseSprites;
 
+    [SerializeField] private List<Sprite> nextAttackSprites;
+    [SerializeField] private Image nextAttackImage;
+
+    private Tween nextAttackUITween;
+
     public override void InitializeCharacter()
     {
         base.InitializeCharacter();
@@ -84,10 +89,21 @@ public class EnemyBehaviour : CharacterBehaviour
             }
         }
         nextAttack = possibleAttacks[Random.Range(0, possibleAttacks.Count)];
+        StartCoroutine(ChangeNextAttackOnUI());
+    }
+
+    IEnumerator ChangeNextAttackOnUI()
+    {
+        nextAttackUITween = nextAttackImage.DOFade(0, .5f);
+        yield return nextAttackUITween.WaitForCompletion();
+        nextAttackImage.sprite = nextAttackSprites[(int)nextAttack.type];
+        nextAttackUITween = nextAttackImage.DOFade(1, .5f);
+        yield return nextAttackUITween.WaitForCompletion();
     }
 
     public override void TakeDamage(int damage, int direction = -1)
     {
+        FightSystem.instance.player.LaunchAttackAnimation();
         damage *= FightSystem.instance.player.isTurnBuffed * FightSystem.instance.player.isDamageBuffed;
         base.TakeDamage(damage, 1);
     }

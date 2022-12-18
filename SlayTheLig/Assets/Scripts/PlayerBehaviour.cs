@@ -1,14 +1,18 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 using UnityEngine.EventSystems;
 
 public class PlayerBehaviour : CharacterBehaviour
 {
+    public UnityEvent buffEvent;
     public int maxActionCost;
 
     [HideInInspector]
     public int currentActionCost, isTurnBuffed, isDamageBuffed, isArmourBuffed, isHealBuffed;
+
+    private Animator animator;
 
     public override void ReInitializeBeforeTurn()
     {
@@ -19,6 +23,12 @@ public class PlayerBehaviour : CharacterBehaviour
         isHealBuffed = 1;
         isDamageBuffed = 1;
         isArmourBuffed = 1;
+        animator = GetComponent<Animator>();
+    }
+
+    public void LaunchAttackAnimation()
+    {
+        animator.SetTrigger("Attack");
     }
 
     public bool CanPlayACard(Attack attack)
@@ -28,6 +38,7 @@ public class PlayerBehaviour : CharacterBehaviour
 
     public void ApplyBuff(Attack attack)
     {
+        buffEvent.Invoke();
         switch (attack.noComboBuffAttackType)
         {
             case AttackType.SimpleAttack:

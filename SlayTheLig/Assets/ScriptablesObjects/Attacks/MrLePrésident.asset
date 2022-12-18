@@ -13,7 +13,9 @@ MonoBehaviour:
   m_Name: "MrLePr\xE9sident"
   m_EditorClassIdentifier: 
   cardName: "Mr. Le Pr\xE9sident"
-  attackDescription: Multiplie tous les effets par 3.
+  attackDescription: 'Juste trop fort.
+
+    Multiplie tous les effets par 3.'
   cardSprite: {fileID: 21300000, guid: aa28be9e15e2be0448a5af2dc69ec965, type: 3}
   actionCost: 6
   attackType: 3

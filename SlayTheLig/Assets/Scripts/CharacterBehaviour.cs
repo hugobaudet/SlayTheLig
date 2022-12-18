@@ -3,6 +3,7 @@ using Mono.Cecil.Cil;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 using UnityEngine.UI;
 
 public class CharacterBehaviour : MonoBehaviour
@@ -22,6 +23,8 @@ public class CharacterBehaviour : MonoBehaviour
     protected Tween knockBackTween;
 
     public Gradient phaseColors;
+
+    public UnityEvent damageEvent, healEvent, shieldEvent;
 
     public virtual void InitializeCharacter()
     {
@@ -45,21 +48,39 @@ public class CharacterBehaviour : MonoBehaviour
         damage -= armourAmount;
         armourAmount -= Mathf.Clamp(tmpDamage, 0, armourAmount);
         currentHP -= Mathf.Clamp(damage, 0, currentHP);
+        damageEvent.Invoke();
         StartCoroutine(KnockBack(direction));
+        if (direction < 0)
+        {
+            StartCoroutine(FightSystem.instance.enemy.KnockBack(direction, false));
+        }
+        else
+        {
+            StartCoroutine(FightSystem.instance.player.KnockBack(direction, false));
+        }
         CheckDeath();
         FightSystem.instance.uiManager.UpdateUIArmour();
         FightSystem.instance.uiManager.UpdateUIHealthBar();
     }
 
-    IEnumerator KnockBack(int direction)
+    public IEnumerator KnockBack(int direction, bool initial = true)
     {
         knockBackTween = transform.DOMove(initialPosition + Vector3.right * direction * knockBackForce,.2f).SetEase(Ease.OutExpo);
-        sprite.color = Color.red;
+        if (initial)
+        {
+            sprite.color = Color.red;
+        }
         yield return knockBackTween.WaitForCompletion();
         knockBackTween = transform.DOMove(initialPosition,.3f);
-        sprite.color = Color.white;
+        if (initial)
+        {
+            sprite.color = Color.white;
+        }
         yield return knockBackTween.WaitForCompletion();
-        FightSystem.instance.PlayNextPhase();
+        if (initial)
+        {
+            FightSystem.instance.PlayNextPhase();
+        }
     }
 
     protected virtual void CheckDeath()
@@ -77,8 +98,9 @@ public class CharacterBehaviour : MonoBehaviour
     public virtual void AddArmour(int armourAmount)
     {
         this.armourAmount += armourAmount;
+        shieldEvent.Invoke();
         FightSystem.instance.uiManager.UpdateUIArmour();
-        StartCoroutine(ArmourAdded());        
+        StartCoroutine(ArmourAdded());
     }
 
     IEnumerator ArmourAdded()
@@ -95,6 +117,7 @@ public class CharacterBehaviour : MonoBehaviour
     public virtual void HealCharacter(int healAmount)
     {
         currentHP += Mathf.Clamp(healAmount, 0, maxHP - currentHP);
+        healEvent.Invoke();
         FightSystem.instance.uiManager.UpdateUIHealthBar();
         FightSystem.instance.PlayNextPhase();
     }

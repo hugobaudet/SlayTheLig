@@ -11,8 +11,7 @@ public class CardBehaviour : MonoBehaviour, IDragHandler, IPointerEnterHandler, 
 {
     private RectTransform draggingObject;
     private Vector3 globalMousePosition, initialGlobalPosition;
-    //[HideInInspector]
-    public bool isFaceDown, isInAnimation, isBeingDrag;
+    private bool isFaceDown, isInAnimation, isBeingDrag;
 
     [SerializeField] private bool updateCardName;
 
@@ -141,11 +140,9 @@ public class CardBehaviour : MonoBehaviour, IDragHandler, IPointerEnterHandler, 
         isBeingDrag = false;
         if (globalMousePosition.y >= FightSystem.instance.uiManager.minimuHeight.position.y)
         {
-            if (FightSystem.instance.PlayACard(attack, cardIndex))
-            {
-                return;
-            }
+            FightSystem.instance.PlayACard(attack, cardIndex);
         }
-        transform.DOMove(initialGlobalPosition, 1f).SetEase(Ease.OutQuint);
+        moveTween = transform.DOMove(initialGlobalPosition, 1f).SetEase(Ease.OutQuint);
+        scaleTween = transform.DOScale(Vector3.one, 1).SetEase(Ease.OutQuint);
     }
 }

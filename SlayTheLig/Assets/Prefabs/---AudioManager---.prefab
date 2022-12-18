@@ -46,7 +46,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   allSounds:
   - name: Music
-    clip: {fileID: 0}
+    clip: {fileID: 8300000, guid: d74876a1133a8034db441859916f10a0, type: 3}
     volume: 0.1
     pitch: 1
     onlyOneCanBePlayed: 1

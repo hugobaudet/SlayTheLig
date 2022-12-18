@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bd8213ed0642d254baac848a60cbd411, type: 3}
   m_Name: TomManager
   m_EditorClassIdentifier: 
-  cardName: Manager Antoine
+  cardName: Manager Tom
   attackDescription: "OMG le BG n\xB03 !\nMultiplie les effets de l'armure par 2."
   cardSprite: {fileID: 21300000, guid: 00c35e05426eaee418ad50835a29fc93, type: 3}
   actionCost: 4

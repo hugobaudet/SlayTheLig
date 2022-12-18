@@ -13,6 +13,7 @@ public class Sounds
     [Range(.1f, 3f)]
     public float pitch;
 
+    public bool onlyOneCanBePlayed;
     public bool loop;
 
     [HideInInspector]
@@ -27,21 +28,15 @@ public class AudioManager : MonoBehaviour
 
     private void Awake()
     {
+        if (instance != null)
+        {
+            Debug.LogError("There is more than one AudioManager in the scene");
+            return;
+        }
         instance = this;
         InitializeAllClips();
     }
 
-    public void PauseOrUnpauseAllClips(bool that)
-    {
-        if (that)
-        {
-            allSounds[0].source.Play();
-        }
-        else
-        {
-            allSounds[0].source.Pause();
-        }
-    }
 
     /// <summary>
     /// Create an audio source for each clip and set it with the right parameter
@@ -59,6 +54,21 @@ public class AudioManager : MonoBehaviour
         }
     }
 
+    public void PauseOrUnpauseAllClips(bool that)
+    {
+        for (int i = 0; i < allSounds.Length; i++)
+        {
+            if (that)
+            {
+                allSounds[i].source.Play();
+            }
+            else
+            {
+                allSounds[i].source.Pause();
+            }
+        }
+    }
+
     public void PlayClip(string name)
     {
         if (name == "")
@@ -72,6 +82,7 @@ public class AudioManager : MonoBehaviour
             Debug.LogWarning("The clip " + name + " doesn't exist !");
             return;
         }
+        if (s.source.isPlaying && s.onlyOneCanBePlayed) return;
         s.source.pitch = UnityEngine.Random.Range(s.pitch - 0.1f, s.pitch + 0.1f);
         s.source.Play();
     }

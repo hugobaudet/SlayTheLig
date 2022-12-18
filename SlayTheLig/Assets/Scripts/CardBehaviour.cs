@@ -8,8 +8,9 @@ using UnityEngine.UI;
 public class CardBehaviour : MonoBehaviour, IDragHandler, IPointerEnterHandler, IPointerExitHandler , IBeginDragHandler, IEndDragHandler
 {
     private RectTransform draggingObject;
-    private Vector3 globalMousePosition, initialGlobalPosition;
-    private bool isFaceDown, isBeingDrag;
+    private Vector3 globalMousePosition;
+    private Vector3 initialPosition;
+    bool isHidden;
 
     [HideInInspector]
     public Attack attack;
@@ -23,15 +24,9 @@ public class CardBehaviour : MonoBehaviour, IDragHandler, IPointerEnterHandler, 
     private void Awake()
     {
         draggingObject = transform as RectTransform;
-        isFaceDown = true;
-        isFaceDown = true;
-        image.sprite = cardBack;
-        initialGlobalPosition = transform.position;
-        cardName.gameObject.SetActive(updateCardName);
-        foreach (Transform item in transform)
-        {
-            item.gameObject.SetActive(false);
-        }
+        initialPosition = transform.localPosition;
+        isHidden = false;
+        ChangeAppearance(true);
     }
 
     public void ChangeAppearance(bool isHidden = true)
@@ -42,30 +37,6 @@ public class CardBehaviour : MonoBehaviour, IDragHandler, IPointerEnterHandler, 
         
     }
 
-    public void ChangeSide(bool flipItDown)
-    {
-        if (flipItDown == isFaceDown) return;
-        isFaceDown = flipItDown;
-        StartCoroutine(ChangeSprite());
-    }
-
-    IEnumerator ChangeSprite()
-    {
-        rotateTween = transform.DORotate(Vector3.up * 90, .5f);
-        yield return rotateTween.WaitForCompletion();
-        image.sprite = isFaceDown ? cardBack : attack.cardSprite;
-        foreach (Transform item in transform)
-        {
-            item.gameObject.SetActive(!isFaceDown);
-        }
-        rotateTween = transform.DORotate(Vector3.zero, .5f);
-        yield return rotateTween.WaitForCompletion();
-        if (!isFaceDown)
-        {
-            FightSystem.instance.StartPlayerChoice();
-        }
-    }
-            
     public void SetNewAttack(Attack attack)
     {
         this.attack = attack;

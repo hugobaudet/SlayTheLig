@@ -109,9 +109,9 @@ public class FightSystem : MonoBehaviour
         currentFightStep = cardAnimation ? FightStep.PlayerChoice : FightStep.AnimationCard;
     }
 
-    public bool PlayACard(Attack attack, int index, bool comboPossible = true)
+    public void PlayACard(Attack attack, int index, bool comboPossible = true)
     {
-        if (!player.CanPlayACard(attack) || currentFightStep != FightStep.PlayerChoice) return false;
+        if (!player.CanPlayACard(attack) || currentFightStep != FightStep.PlayerChoice) return;
         player.currentActionCost -= attack.actionCost;
         uiManager.UpdateUIActionPoint();
         currentFightStep = FightStep.PlayerAttack;
@@ -120,7 +120,7 @@ public class FightSystem : MonoBehaviour
             case AttackType.SimpleAttack:
                 enemy.TakeDamage(attack.basicDamage);
                 cardManager.RemoveCardAt(index);
-                return true;
+                return;
             case AttackType.ComboAttack:
                 if (cardManager.IsComboPossible(attack) && comboPossible)
                 {
@@ -129,14 +129,14 @@ public class FightSystem : MonoBehaviour
                         enemy.TakeDamage(attack.comboDamage);
                         cardManager.RemoveComboPieces(attack);
                         cardManager.RemoveCardAt(index);
-                        return true;
+                        return;
                     }
                     player.currentActionCost += attack.actionCost;
                     uiManager.UpdateUIActionPoint();
                     currentFightStep = FightStep.PlayerComboChoice;
                     lastattack = new Card(attack, index);
                     uiManager.DisplayUICombo();
-                    return false;
+                    return;
                 }
                 switch (attack.noComboAttackType)
                 {
@@ -156,21 +156,21 @@ public class FightSystem : MonoBehaviour
                         break;
                 }
                 cardManager.RemoveCardAt(index);
-                return true;
+                return;
             case AttackType.Heal:
                 player.HealCharacter(attack.basicHeal);
                 cardManager.RemoveCardAt(index);
-                return true;
+                return;
             case AttackType.Buff:
                 player.ApplyBuff(attack);
                 cardManager.RemoveCardAt(index);
-                return true;
+                return;
             case AttackType.Defense:
                 player.AddArmour(attack.basicDefense);
                 cardManager.RemoveCardAt(index);
-                return true;
+                return;
             default:
-                return true;
+                return;
         }
     }
 

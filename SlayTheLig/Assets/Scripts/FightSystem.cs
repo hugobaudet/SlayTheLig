@@ -57,7 +57,7 @@ public class FightSystem : MonoBehaviour
     public CardManager cardManager;
     public UIManager uiManager;
 
-    private FightStep currentFightStep;
+    [HideInInspector] public FightStep currentFightStep;
 
     public List<Card> deck;
 

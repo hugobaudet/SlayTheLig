@@ -63,6 +63,7 @@ public class UIManager : MonoBehaviour
 
     public void UseCombo(bool use)
     {
+        if (FightSystem.instance.currentFightStep != FightStep.PlayerComboChoice) return;
         FightSystem.instance.PlayCombo(use);
         uiCombo.SetActive(false);
     }

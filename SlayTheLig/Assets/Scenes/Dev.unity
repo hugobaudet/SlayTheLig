@@ -3378,6 +3378,7 @@ MonoBehaviour:
   enemy: {fileID: 515219347}
   cardManager: {fileID: 1014382011}
   uiManager: {fileID: 1014382009}
+  currentFightStep: 0
   deck:
   - card: {fileID: 11400000, guid: 9eda428561668ce49b631abf84660cb9, type: 2}
     number: 2
@@ -3392,9 +3393,9 @@ MonoBehaviour:
   - card: {fileID: 11400000, guid: 49fa82bb57c9fc3419880b0a7d1bfd71, type: 2}
     number: 1
   - card: {fileID: 11400000, guid: 3dc3026b3ec72254ea62c761fbe9c136, type: 2}
-    number: 1
+    number: 10
   - card: {fileID: 11400000, guid: ee64c0b78c584b54b8bb637d6fb7360e, type: 2}
-    number: 1
+    number: 10
   - card: {fileID: 11400000, guid: 0a49bd83d68abce41b9acb2b5a815fab, type: 2}
     number: 1
   - card: {fileID: 11400000, guid: 6f274fbbf48ad3343bc1a9486cef3a61, type: 2}

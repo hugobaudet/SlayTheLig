@@ -131,6 +131,8 @@ public class FightSystem : MonoBehaviour
                         cardManager.RemoveCardAt(index);
                         return true;
                     }
+                    player.currentActionCost += attack.actionCost;
+                    uiManager.UpdateUIActionPoint();
                     currentFightStep = FightStep.PlayerComboChoice;
                     lastattack = new Card(attack, index);
                     uiManager.DisplayUICombo();
@@ -172,7 +174,6 @@ public class FightSystem : MonoBehaviour
         }
     }
 
-    //IT WORKS
     public void PlayCombo(bool combo)
     {
         currentFightStep = FightStep.PlayerChoice;
@@ -180,7 +181,6 @@ public class FightSystem : MonoBehaviour
         lastattack = null;
     }
     
-    //IT WORKS
     public void WinLose(bool win)
     {
         currentFightStep = FightStep.EndFight;

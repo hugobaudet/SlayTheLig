@@ -9,8 +9,10 @@ using UnityEngine.UI;
 public class CharacterBehaviour : MonoBehaviour
 {
     [SerializeField]
-    private Image shieldImage;
-    private Tween shieldFadeTween, shieldScaleTween;
+    private Image feedBackImage;
+    [SerializeField] 
+    private Sprite shieldSprite, healSprite;
+    private Tween feedbackFadeTween, feedBackcaleTween;
 
     public int maxHP, knockBackForce;
 
@@ -100,18 +102,8 @@ public class CharacterBehaviour : MonoBehaviour
         this.armourAmount += armourAmount;
         shieldEvent.Invoke();
         FightSystem.instance.uiManager.UpdateUIArmour();
-        StartCoroutine(ArmourAdded());
-    }
-
-    IEnumerator ArmourAdded()
-    {
-        shieldFadeTween = shieldImage.DOFade(1, .5f).SetEase(Ease.OutQuint);
-        shieldScaleTween = shieldImage.transform.DOScale(2, .5f).SetEase(Ease.OutQuint);
-        yield return shieldFadeTween.WaitForCompletion();
-        shieldFadeTween = shieldImage.DOFade(0, 1f);
-        shieldScaleTween = shieldImage.transform.DOScale(1, 1f);
-        yield return shieldFadeTween.WaitForCompletion();
-        FightSystem.instance.PlayNextPhase();
+        feedBackImage.sprite = shieldSprite;
+        StartCoroutine(FeedbackTween());
     }
 
     public virtual void HealCharacter(int healAmount)
@@ -119,6 +111,18 @@ public class CharacterBehaviour : MonoBehaviour
         currentHP += Mathf.Clamp(healAmount, 0, maxHP - currentHP);
         healEvent.Invoke();
         FightSystem.instance.uiManager.UpdateUIHealthBar();
+        feedBackImage.sprite = healSprite;
+        StartCoroutine(FeedbackTween());
+    }
+
+    IEnumerator FeedbackTween()
+    {
+        feedbackFadeTween = feedBackImage.DOFade(1, .5f).SetEase(Ease.OutQuint);
+        feedBackcaleTween = feedBackImage.transform.DOScale(2, .5f).SetEase(Ease.OutQuint);
+        yield return feedbackFadeTween.WaitForCompletion();
+        feedbackFadeTween = feedBackImage.DOFade(0, 1f);
+        feedBackcaleTween = feedBackImage.transform.DOScale(1, 1f);
+        yield return feedbackFadeTween.WaitForCompletion();
         FightSystem.instance.PlayNextPhase();
     }
 }

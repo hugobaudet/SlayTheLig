@@ -1405,7 +1405,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: af353ee5c66e4d44b8e6de15408581e6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  shieldImage: {fileID: 722230190}
+  feedBackImage: {fileID: 722230190}
+  shieldSprite: {fileID: 21300000, guid: 9a7a34bc8b8272348a526e174fadda06, type: 3}
+  healSprite: {fileID: 21300000, guid: ec8bda6d54156e240baa9f3ca40412f1, type: 3}
   maxHP: 100
   knockBackForce: 50
   currentHP: 0
@@ -2173,7 +2175,7 @@ GameObject:
   - component: {fileID: 687317660}
   - component: {fileID: 687317659}
   m_Layer: 5
-  m_Name: ShieldFeedBack
+  m_Name: FeedBackImage
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2382,7 +2384,7 @@ GameObject:
   - component: {fileID: 722230189}
   - component: {fileID: 722230190}
   m_Layer: 5
-  m_Name: ShieldFeedBack
+  m_Name: FeedBackImage
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -3393,9 +3395,9 @@ MonoBehaviour:
   - card: {fileID: 11400000, guid: 49fa82bb57c9fc3419880b0a7d1bfd71, type: 2}
     number: 1
   - card: {fileID: 11400000, guid: 3dc3026b3ec72254ea62c761fbe9c136, type: 2}
-    number: 10
+    number: 1
   - card: {fileID: 11400000, guid: ee64c0b78c584b54b8bb637d6fb7360e, type: 2}
-    number: 10
+    number: 1
   - card: {fileID: 11400000, guid: 0a49bd83d68abce41b9acb2b5a815fab, type: 2}
     number: 1
   - card: {fileID: 11400000, guid: 6f274fbbf48ad3343bc1a9486cef3a61, type: 2}
@@ -3570,7 +3572,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7d3f4c8aabfa8674bbb89c546e3ce845, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  shieldImage: {fileID: 687317659}
+  feedBackImage: {fileID: 687317659}
+  shieldSprite: {fileID: 21300000, guid: 9a7a34bc8b8272348a526e174fadda06, type: 3}
+  healSprite: {fileID: 21300000, guid: ec8bda6d54156e240baa9f3ca40412f1, type: 3}
   maxHP: 50
   knockBackForce: 50
   currentHP: 0

@@ -63,7 +63,7 @@ public class EnemyBehaviour : CharacterBehaviour
             {
                 isAlive = false;
                 currentHP = 0;
-                FightSystem.instance.WinLose(false);
+                FightSystem.instance.WinLose(true);
                 return;
             }
             FightSystem.instance.uiManager.ChangePhaseColor(phaseColors.Evaluate(1- (currentPhase / 3f)));

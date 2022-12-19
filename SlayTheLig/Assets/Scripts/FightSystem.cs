@@ -57,7 +57,7 @@ public class FightSystem : MonoBehaviour
     public CardManager cardManager;
     public UIManager uiManager;
 
-    private FightStep currentFightStep;
+    [HideInInspector] public FightStep currentFightStep;
 
     public List<Card> deck;
 
@@ -184,13 +184,10 @@ public class FightSystem : MonoBehaviour
     public void WinLose(bool win)
     {
         currentFightStep = FightStep.EndFight;
-        if (win)
+        uiManager.DisplayEndMenu(win);
+        foreach (CardBehaviour item in cardManager.cardBehaviours)
         {
-            Debug.Log("Partie gagnée");
-        }
-        else
-        {
-            Debug.Log("Partie perdue");
+            item.enabled = false;
         }
     }
 

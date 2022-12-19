@@ -1,3 +1,4 @@
+using DG.Tweening;
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
@@ -20,7 +21,7 @@ public class UIManager : MonoBehaviour
     private TMP_Text actionPoint, nbCardInDiscardPile, nbCardInDeck, nbArmourPlayer, nbAmourEnemy, nbHPPlayer, nbHPEnemy;
 
     [SerializeField]
-    private GameObject uiCombo;
+    private GameObject uiCombo, uiVictoryMenu, uiDefeatMenu;
 
     public Transform minimuHeight, cardPlacement;
 
@@ -62,7 +63,30 @@ public class UIManager : MonoBehaviour
 
     public void UseCombo(bool use)
     {
+        if (FightSystem.instance.currentFightStep != FightStep.PlayerComboChoice) return;
         FightSystem.instance.PlayCombo(use);
         uiCombo.SetActive(false);
+    }
+
+    public void DisplayEndMenu(bool victory)
+    { 
+        if (victory)
+        {
+            uiVictoryMenu.SetActive(victory);
+            uiVictoryMenu.GetComponent<Image>().DOFade(1, 1);
+            foreach (Transform item in uiVictoryMenu.transform)
+            {
+                item.GetComponent<Image>().DOFade(1, 1);
+            }
+        }
+        else
+        {
+            uiDefeatMenu.SetActive(!victory);
+            uiDefeatMenu.GetComponent<Image>().DOFade(1, 1);
+            foreach (Transform item in uiDefeatMenu.transform)
+            {
+                item.GetComponent<Image>().DOFade(1, 1);
+            }
+        }
     }
 }
